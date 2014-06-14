@@ -69,17 +69,17 @@ void setup() {
 	oceanShader.set("color2", 0.9);
 	oceanShader.set("color3", 0.8);
 	oceanShader.set("color4", 0.7);
-	oceanShader.set("color5", 0.5);
-	oceanShader.set("color6", 0.4);
-	oceanShader.set("color7", 0.2);
-	oceanShader.set("color8", 0.1);
+	oceanShader.set("color5", 0.6);
+	oceanShader.set("color6", 0.5);
+	oceanShader.set("color7", 0.4);
+	oceanShader.set("color8", 0.3);
 	oceanShader.set("color_treshold1", 1.0);
 	oceanShader.set("color_treshold2", 0.9);
 	oceanShader.set("color_treshold3", 0.8);
 	oceanShader.set("color_treshold4", 0.7);
-	oceanShader.set("color_treshold5", 0.5);
-	oceanShader.set("color_treshold6", 0.4);
-	oceanShader.set("color_treshold7", 0.3);
+	oceanShader.set("color_treshold5", 0.6);
+	oceanShader.set("color_treshold6", 0.5);
+	oceanShader.set("color_treshold7", 0.4);
 
         float size = 100;
         bubbles[0] = new Bubble(createShape(SPHERE, size, size));
@@ -92,8 +92,6 @@ void setup() {
 void draw() {
 	// update moonlander with rocket
 	moonlander.update();
-
-	double bg_red = moonlander.getValue("background_red");
 
 	background(0, 0, 0);
 
@@ -137,4 +135,9 @@ void draw() {
         for (int i = 0; i < bubbles.length; i++) { println("drawing bubble "+i); bubbles[i].display(); }
 
 	resetShader();
+
+	hint(DISABLE_DEPTH_TEST);
+	fill((float) moonlander.getValue("fadecolorR"), (float) moonlander.getValue("fadecolorG"), (float) moonlander.getValue("fadecolorB"), (float) moonlander.getValue("fade"));
+	rect(0, 0, width * 2, height * 2);
+	hint(ENABLE_DEPTH_TEST);
 }

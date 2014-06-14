@@ -11,10 +11,14 @@
 int CANVAS_WIDTH = 480;
 int CANVAS_HEIGHT = 360;
 
+//PShape wave;
+
 void setup() {
   // The P3D parameter enables accelerated 3D rendering.
   size(CANVAS_WIDTH, CANVAS_HEIGHT, P3D);
   rectMode(CENTER);
+//  wave = loadShape("ocean.obj"); // load ocean.obj to PShape wave
+//  wave.disableStyle();
 }
 
 void draw() {
@@ -31,30 +35,48 @@ void draw() {
   rotateX((mouseY - height/2) * -0.001);
 
 
-  fill(255);
-
+  
+//  pushMatrix();
+//  scale(100, 100, 100);
+//  lights();
+//  fill(0,0,255);
+//  
+////  for (int i=0;i< wave.getChildCount(); i++) {
+////    PShape child = wave.getChild(i);
+////    for (int j=0; j < child.getVertexCount();j++) {
+////      PVector v = child.getVertex(j);
+//////      v.z += (sin(PI*0.1*j*secs/100)*.1);
+//////      v.y *= random(-1,1)*secs;
+////      child.setVertex(j, v.x, v.y);
+////    }
+////  } // makes the shape flat O_o
+//  shape(wave, 0, 0);
+//  println(wave.getChildCount());
+//  popMatrix();
 
   // Draw the ground plane
 
-  pushMatrix();
-  // Rotate the plane by 90 degrees so it's laying on the ground
-  // instead of facing the camera. Try to use `secs` instead and
-  // see what happens :)
-  rotateX(PI/2);
-  scale(6.0);
-  // Draw the plane
-  rect(0, 0, 100, 100);
-  popMatrix();
+//  pushMatrix();
+//  // Rotate the plane by 90 degrees so it's laying on the ground
+//  // instead of facing the camera. Try to use `secs` instead and
+//  // see what happens :)
+//  rotateX(PI/2);
+//  scale(6.0);
+//  // Draw the plane
+//  rect(0, 0, 100, 100);
+//  popMatrix();
 
 
   fill(255, 255, 0);
-  stroke(255,0,0);
-  for (float i=0;i<100;i++) {
-    for (float j=0;j<100;j++) {
-      point(3*i-100,-100+5*sin(i*.5-2*j),3*j+200);
-    }
-  }
+//  stroke(255,0,0);
+//  for (float i=0;i<100;i++) {
+//    for (float j=0;j<100;j++) {
+//      point(3*i-100,-100+5*sin(i*.5-2*j),3*j+200);
+//    }
+//  }
   stroke(0);
+
+  
 
 
   // Draw the bouncing ball

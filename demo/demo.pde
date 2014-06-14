@@ -7,13 +7,19 @@
  * - Drawing plane and sphere primitives
  * - 3D-transformations
  */
+import moonlander.library.*;
 
-int CANVAS_WIDTH = 1920;
-int CANVAS_HEIGHT = 1080;
+import ddf.minim.*;
+
+Moonlander moonlander;
+
+int CANVAS_WIDTH = 1920/2;
+int CANVAS_HEIGHT = 1080/2;
 PShape s;
 
 void setup() {
 	// The P3D parameter enables accelerated 3D rendering.
+        moonlander = Moonlander.initWithSoundtrack(this, "graffa.wav", 100, 4);
 	size(CANVAS_WIDTH, CANVAS_HEIGHT, P3D);
 	rectMode(CENTER);
 
@@ -28,9 +34,16 @@ void setup() {
 		}
 	}
 	s.endShape();
+        
+        moonlander.start();
 }
 
 void draw() {
+        // update moonlander with rocket
+        moonlander.update();
+        
+        double bg_red = moonlander.getValue("background_red");
+        
 	background(0, 0, 0);
 	float secs = millis() / 1000.0;
 
@@ -47,7 +60,8 @@ void draw() {
 	pushMatrix();
 	//rotate(pmouseX / 360.0, 1, 0, 0);
 	for(int i = 0; i < s.getVertexCount(); i++) {
-		PVector v = s.getVertex(i);
+                fill(bg_red, 0, 0);
+  		PVector v = s.getVertex(i);
 		v.y = 2 * sin(v.x / 10.0 + millis() / 1000.0);
 		s.setVertex(i, v);
 	}

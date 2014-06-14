@@ -40,7 +40,7 @@ void setup() {
 	noStroke();
 	colorMode(RGB, 1);
 
-	s = loadShape("ocean.obj");
+	s = loadShape("flatgrid.obj");
 	/*
 	s = createShape();
 	s.beginShape(TRIANGLE_STRIP);
@@ -62,11 +62,23 @@ void setup() {
 	*/
 
 	oceanShader = loadShader("toonFrag.glsl", "toonVert.glsl");
-	oceanShader.set("fraction", 2.0);
-	oceanShader.set("color1", 0.2, 0.4, 1.0);
-	oceanShader.set("color2", 0.1, 0.3, 0.8);
-	oceanShader.set("color3", 0.1, 0.3, 0.6);
-	oceanShader.set("color4", 0.0, 0.3, 0.6);
+	oceanShader.set("fraction", 1.0);
+	oceanShader.set("baseColor", 0.2, 0.7, 1.0, 1.0);
+	oceanShader.set("color1", 1.0);
+	oceanShader.set("color2", 0.9);
+	oceanShader.set("color3", 0.8);
+	oceanShader.set("color4", 0.7);
+	oceanShader.set("color5", 0.5);
+	oceanShader.set("color6", 0.4);
+	oceanShader.set("color7", 0.2);
+	oceanShader.set("color8", 0.1);
+	oceanShader.set("color_treshold1", 1.0);
+	oceanShader.set("color_treshold2", 0.9);
+	oceanShader.set("color_treshold3", 0.8);
+	oceanShader.set("color_treshold4", 0.7);
+	oceanShader.set("color_treshold5", 0.5);
+	oceanShader.set("color_treshold6", 0.4);
+	oceanShader.set("color_treshold7", 0.3);
 
         float size = 100;
         bubbles[0] = new Bubble(createShape(SPHERE, size, size));
@@ -77,25 +89,31 @@ void setup() {
 }
 
 void draw() {
-        // update moonlander with rocket
+	// update moonlander with rocket
 	moonlander.update();
 
 	double bg_red = moonlander.getValue("background_red");
 
 	background(0, 0, 0);
 
-	directionalLight(255, 255, 255, -(pow(sin(radians((float) moonlander.getCurrentTime())), 2)+300 / float(width) - 0.5) * 2, -(300 / float(height) - 0.5) * 2, -1);
+	//directionalLight(255, 255, 255, -(pow(sin(radians((float) moonlander.getCurrentTime())), 2)+300 / float(width) - 0.5) * 2, -(300 / float(height) - 0.5) * 2, -1);
+	directionalLight(255, 255, 255, 0, -1, 0);
 	// Center the view
-	translate(width/2, height/2, 0);
+	pushMatrix();
+	translate((float) moonlander.getValue("camera_x"),
+			(float) moonlander.getValue("camera_y"),
+			(float) moonlander.getValue("camera_z"));
+	rotateX(radians((float) moonlander.getValue("rotate_x")));
+	rotateY(radians((float) moonlander.getValue("rotate_y")));
+	rotateZ(radians((float) moonlander.getValue("rotate_z")));
 	// Move up and backwards - away from the origin
-	translate(-2000, 500, -2000);
+	//translate(-2000, 1000, -2000);
 	scale(500);
 	//lights();
 	// Rotate the viewport a bit with mouse
 	//rotateY((mouseX - width/2) * 0.003);
 	//rotateX((mouseY - height/2) * -0.003);
 
-	pushMatrix();
 
 	shader(oceanShader);
 
@@ -105,10 +123,10 @@ void draw() {
 
 		for(int i = 0; i < child.getVertexCount(); i++) {
 			PVector v = child.getVertex(i);
-			v.y = sin(v.x / 2.0 + (float) moonlander.getCurrentTime()) + cos(v.z / 2.0 + (float) moonlander.getCurrentTime());
-			v.y += 0.5 * sin(v.x / 5.0 + (float) moonlander.getCurrentTime()) + cos(v.z / 5.0 + (float) moonlander.getCurrentTime());
-			v.y += 0.5 * sin(v.x / 7.0 + (float) moonlander.getCurrentTime()) + cos(v.z / 7.0 + (float) moonlander.getCurrentTime());
-			v.y += 0.05 * ((v.x * v.x + v.z * v.z * v.z) % 20);
+			v.y = (float) moonlander.getValue("wave1") * (sin(v.x / 2.0 + (float) moonlander.getCurrentTime()) + cos(v.z / 2.0 + (float) moonlander.getCurrentTime()));
+			v.y += (float) moonlander.getValue("wave2") * (sin(v.x / 5.0 + (float) moonlander.getCurrentTime()) + cos(v.z / 5.0 + (float) moonlander.getCurrentTime()));
+			v.y += (float) moonlander.getValue("wave3") * (sin(v.x / 7.0 + (float) moonlander.getCurrentTime()) + cos(v.z / 7.0 + (float) moonlander.getCurrentTime()));
+			v.y += (float) moonlander.getValue("wave4") * ((v.x * v.x + v.z * v.z * v.z) % 20);
 			child.setVertex(i, v);
 		}
 	}

@@ -18,6 +18,19 @@ int CANVAS_HEIGHT = 1080/2;
 PShape s;
 PShader oceanShader;
 
+class Bubble {
+  PShape b;
+  
+  Bubble(PShape b_) {
+    b = b_; //createShape(SPHERE, x, y, size, size);
+//    b.setFill(color(100,100,255);
+  }
+  
+  void display() { shape(b); }
+}
+
+Bubble[] bubbles = new Bubble[3];
+
 void setup() {
 	// The P3D parameter enables accelerated 3D rendering.
         moonlander = Moonlander.initWithSoundtrack(this, "graffa.wav", 100, 4);
@@ -55,6 +68,11 @@ void setup() {
 	oceanShader.set("color3", 0.1, 0.3, 0.6);
 	oceanShader.set("color4", 0.0, 0.3, 0.6);
 
+        float size = 100;
+        bubbles[0] = new Bubble(createShape(SPHERE, size, size));
+        bubbles[1] = new Bubble(createShape(SPHERE, size*.7, size*.7));
+        bubbles[2] = new Bubble(createShape(SPHERE, size*.5, size*.5));
+
 	moonlander.start();
 }
 
@@ -65,9 +83,8 @@ void draw() {
 	double bg_red = moonlander.getValue("background_red");
 
 	background(0, 0, 0);
-	float secs = millis() / 1000.0;
 
-	directionalLight(255, 255, 255, -(pow(sin(radians(frameCount)), 2)+300 / float(width) - 0.5) * 2, -(300 / float(height) - 0.5) * 2, -1);
+	directionalLight(255, 255, 255, -(pow(sin(radians((float) moonlander.getCurrentTime())), 2)+300 / float(width) - 0.5) * 2, -(300 / float(height) - 0.5) * 2, -1);
 	// Center the view
 	translate(width/2, height/2, 0);
 	// Move up and backwards - away from the origin
@@ -88,16 +105,17 @@ void draw() {
 
 		for(int i = 0; i < child.getVertexCount(); i++) {
 			PVector v = child.getVertex(i);
-			v.y = sin(v.x / 2.0 + (float) moonlander.getCurrentTime() / 1000.0) + cos(v.z / 2.0 + (float) moonlander.getCurrentTime() / 1000.0);
-			v.y += 0.5 * sin(v.x / 5.0 + (float) moonlander.getCurrentTime() / 1000.0) + cos(v.z / 5.0 + (float) moonlander.getCurrentTime() / 1000.0);
-			v.y += 0.5 * sin(v.x / 7.0 + (float) moonlander.getCurrentTime() / 1000.0) + cos(v.z / 7.0 + (float) moonlander.getCurrentTime() / 1000.0);
+			v.y = sin(v.x / 2.0 + (float) moonlander.getCurrentTime()) + cos(v.z / 2.0 + (float) moonlander.getCurrentTime());
+			v.y += 0.5 * sin(v.x / 5.0 + (float) moonlander.getCurrentTime()) + cos(v.z / 5.0 + (float) moonlander.getCurrentTime());
+			v.y += 0.5 * sin(v.x / 7.0 + (float) moonlander.getCurrentTime()) + cos(v.z / 7.0 + (float) moonlander.getCurrentTime());
 			v.y += 0.05 * ((v.x * v.x + v.z * v.z * v.z) % 20);
 			child.setVertex(i, v);
 		}
 	}
-
 	shape(s);
 	popMatrix();
+
+        for (int i = 0; i < bubbles.length; i++) { println("drawing bubble "+i); bubbles[i].display(); }
 
 	resetShader();
 }

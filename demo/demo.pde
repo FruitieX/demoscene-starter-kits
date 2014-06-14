@@ -13,8 +13,6 @@ import ddf.minim.*;
 
 Moonlander moonlander;
 
-int scene = 1;
-
 int CANVAS_WIDTH = 1920/2;
 int CANVAS_HEIGHT = 1080/2;
 PShape s;
@@ -69,7 +67,6 @@ void setup() {
 
 	oceanShader = loadShader("toonFrag.glsl", "toonVert.glsl");
 	oceanShader.set("fraction", 1.0);
-	oceanShader.set("baseColor", 0.2, 0.7, 1.0, 1.0);
 	oceanShader.set("color1", 1.0);
 	oceanShader.set("color2", 0.9);
 	oceanShader.set("color3", 0.8);
@@ -100,6 +97,7 @@ void draw() {
 	// update moonlander with rocket
 	moonlander.update();
 
+	oceanShader.set("baseColor", (float) moonlander.getValue("water_R"), (float) moonlander.getValue("water_G"), (float) moonlander.getValue("water_B"), (float) moonlander.getValue("water_alpha"));
 	background(0, 0, 0);
 
 	//directionalLight(255, 255, 255, -(pow(sin(radians((float) moonlander.getCurrentTime())), 2)+300 / float(width) - 0.5) * 2, -(300 / float(height) - 0.5) * 2, -1);
@@ -142,6 +140,7 @@ void draw() {
 
 		lights();
 
+		/*
 		float sx = (float) moonlander.getValue("SphereX");
 		float sy = (float) moonlander.getValue("SphereY");
 		float sz = (float) moonlander.getValue("SphereZ");
@@ -152,6 +151,7 @@ void draw() {
 			bubbles[i].display();
 			popMatrix();
 		}
+		*/
 
 		resetShader();
 

@@ -85,8 +85,40 @@
 			<key row="88" value="0" interpolation="1"/>
 			<key row="96" value="1" interpolation="0"/>
 		</track>
+		<track name="scene">
+			<key row="0" value="1" interpolation="0"/>
+		</track>
+		<track name="SphereX"/>
+		<track name="SphereY"/>
+		<track name="SphereZ"/>
+		<track name="water_R">
+			<key row="0" value="1" interpolation="1"/>
+			<key row="8" value="0.4" interpolation="1"/>
+			<key row="32" value="2" interpolation="0"/>
+			<key row="64" value="0.4" interpolation="0"/>
+		</track>
+		<track name="water_G">
+			<key row="0" value="1" interpolation="1"/>
+			<key row="8" value="0.8" interpolation="1"/>
+			<key row="32" value="1" interpolation="0"/>
+			<key row="64" value="0.2" interpolation="1"/>
+			<key row="88" value="2" interpolation="0"/>
+		</track>
+		<track name="water_B">
+			<key row="0" value="1" interpolation="1"/>
+			<key row="8" value="2" interpolation="0"/>
+			<key row="32" value="0" interpolation="1"/>
+			<key row="64" value="0.5" interpolation="1"/>
+			<key row="88" value="2" interpolation="0"/>
+		</track>
+		<track name="water_alpha">
+			<key row="0" value="0.2" interpolation="1"/>
+			<key row="32" value="0.5" interpolation="0"/>
+			<key row="64" value="0.2" interpolation="0"/>
+		</track>
 	</tracks>
 	<bookmarks>
+		<bookmark row="34"/>
 		<bookmark row="70"/>
 	</bookmarks>
 </sync>

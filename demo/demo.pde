@@ -7,14 +7,20 @@
  * - Drawing plane and sphere primitives
  * - 3D-transformations
  */
+import moonlander.library.*;
 
-int CANVAS_WIDTH = 1920;
-int CANVAS_HEIGHT = 1080;
+import ddf.minim.*;
+
+Moonlander moonlander;
+
+int CANVAS_WIDTH = 1920/2;
+int CANVAS_HEIGHT = 1080/2;
 PShape s;
 PShader oceanShader;
 
 void setup() {
 	// The P3D parameter enables accelerated 3D rendering.
+        moonlander = Moonlander.initWithSoundtrack(this, "graffa.wav", 100, 4);
 	size(CANVAS_WIDTH, CANVAS_HEIGHT, P3D);
 	rectMode(CENTER);
 
@@ -48,9 +54,16 @@ void setup() {
 	oceanShader.set("color2", 0.1, 0.3, 0.8);
 	oceanShader.set("color3", 0.1, 0.3, 0.6);
 	oceanShader.set("color4", 0.0, 0.3, 0.6);
+
+	moonlander.start();
 }
 
 void draw() {
+        // update moonlander with rocket
+	moonlander.update();
+
+	double bg_red = moonlander.getValue("background_red");
+
 	background(0, 0, 0);
 	float secs = millis() / 1000.0;
 
@@ -75,11 +88,11 @@ void draw() {
 
 		for(int i = 0; i < child.getVertexCount(); i++) {
 			PVector v = child.getVertex(i);
-			//v.y = sin(v.x / 2.0 + pmouseX / 1000.0) + cos(v.z / 2.0 + pmouseX / 1000.0);
-			//v.y += 0.5 * sin(v.x / 5.0 + pmouseX / 1000.0) + cos(v.z / 5.0 + pmouseX / 1000.0);
-			//v.y += 0.5 * sin(v.x / 7.0 + pmouseX / 1000.0) + cos(v.z / 7.0 + pmouseX / 1000.0);
-			//v.y += 0.05 * ((v.x * v.x + v.z * v.z * v.z) % 20);
-			//child.setVertex(i, v);
+			v.y = sin(v.x / 2.0 + moonlander.getCurrentTime() / 1000.0) + cos(v.z / 2.0 + moonlander.getCurrentTime() / 1000.0);
+			v.y += 0.5 * sin(v.x / 5.0 + moonlander.getCurrentTime() / 1000.0) + cos(v.z / 5.0 + moonlander.getCurrentTime() / 1000.0);
+			v.y += 0.5 * sin(v.x / 7.0 + moonlander.getCurrentTime() / 1000.0) + cos(v.z / 7.0 + moonlander.getCurrentTime() / 1000.0);
+			v.y += 0.05 * ((v.x * v.x + v.z * v.z * v.z) % 20);
+			child.setVertex(i, v);
 		}
 	}
 

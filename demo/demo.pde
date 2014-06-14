@@ -13,6 +13,8 @@ import ddf.minim.*;
 
 Moonlander moonlander;
 
+int scene = 1;
+
 int CANVAS_WIDTH = 1920/2;
 int CANVAS_HEIGHT = 1080/2;
 PShape s;
@@ -27,6 +29,9 @@ class Bubble {
   }
   
   void display() { shape(b); }
+
+	void disableStyle() { b.disableStyle(); }
+//	void setFillColor(int a, int r, int g, int blue) { Fill(a,r,g,blue); }
 }
 
 Bubble[] bubbles = new Bubble[3];
@@ -81,10 +86,12 @@ void setup() {
 	oceanShader.set("color_treshold6", 0.5);
 	oceanShader.set("color_treshold7", 0.4);
 
+	// create bubbles
         float size = 100;
         bubbles[0] = new Bubble(createShape(SPHERE, size, size));
         bubbles[1] = new Bubble(createShape(SPHERE, size*.7, size*.7));
         bubbles[2] = new Bubble(createShape(SPHERE, size*.5, size*.5));
+//	for (int i = 0; i < bubbles.length; i++) bubbles[i].setFillColor(100,100,100,255);
 
 	moonlander.start();
 }
@@ -113,31 +120,59 @@ void draw() {
 	//rotateY((mouseX - width/2) * 0.003);
 	//rotateX((mouseY - height/2) * -0.003);
 
+	int scene = moonlander.getValue("scene");
+	if(scene == 1) {
+		shader(oceanShader);
 
-	shader(oceanShader);
+		//rotate(pmouseX / 360.0, 1, 0, 0);
+		for (int j = 0; j < s.getChildCount(); j++) {
+			PShape child = s.getChild(j);
 
-	//rotate(pmouseX / 360.0, 1, 0, 0);
-	for (int j = 0; j < s.getChildCount(); j++) {
-		PShape child = s.getChild(j);
+			for(int i = 0; i < child.getVertexCount(); i++) {
+				PVector v = child.getVertex(i);
+				v.y = (float) moonlander.getValue("wave1") * (sin(v.x * (float) moonlander.getValue("wave1_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave1_spd") + (float) moonlander.getCurrentTime()));
+				v.y += (float) moonlander.getValue("wave2") * (sin(v.x * (float) moonlander.getValue("wave2_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave2_spd") + (float) moonlander.getCurrentTime()));
+				v.y += (float) moonlander.getValue("wave3") * (sin(v.x * (float) moonlander.getValue("wave3_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave3_spd") + (float) moonlander.getCurrentTime()));
+				v.y += (float) moonlander.getValue("wave4") * ((v.x * v.x + v.z * v.z * v.z) % 20);
+				child.setVertex(i, v);
+			}
+		}
+		shape(s);
+		popMatrix();
 
-		for(int i = 0; i < child.getVertexCount(); i++) {
-			PVector v = child.getVertex(i);
-			v.y = (float) moonlander.getValue("wave1") * (sin(v.x * (float) moonlander.getValue("wave1_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave1_spd") + (float) moonlander.getCurrentTime()));
-			v.y += (float) moonlander.getValue("wave2") * (sin(v.x * (float) moonlander.getValue("wave2_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave2_spd") + (float) moonlander.getCurrentTime()));
-			v.y += (float) moonlander.getValue("wave3") * (sin(v.x * (float) moonlander.getValue("wave3_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave3_spd") + (float) moonlander.getCurrentTime()));
-			v.y += (float) moonlander.getValue("wave4") * ((v.x * v.x + v.z * v.z * v.z) % 20);
-			child.setVertex(i, v);
+		lights();
+
+		float sx = (float) moonlander.getValue("SphereX");
+		float sy = (float) moonlander.getValue("SphereY");
+		float sz = (float) moonlander.getValue("SphereZ");
+		for (int i = 0; i < bubbles.length; i++) {
+			 println("drawing bubble "+i);
+			pushMatrix();
+			translate(sx+i*100,sy,sz);
+			bubbles[i].display();
+			popMatrix();
+		}
+
+		resetShader();
+
+		hint(DISABLE_DEPTH_TEST);
+		fill((float) moonlander.getValue("fadecolorR"), (float) moonlander.getValue("fadecolorG"), (float) moonlander.getValue("fadecolorB"), (float) moonlander.getValue("fade"));
+		rect(0, 0, width * 2, height * 2);
+		hint(ENABLE_DEPTH_TEST);
+	} else if (scene == 2) {
+		resetShader();
+
+		fill(100,100,100,255);
+//		float sx = (float) moonlander.getValue("SphereX");
+//		float sy = (float) moonlander.getValue("SphereY");
+//		float sz = (float) moonlander.getValue("SphereZ");
+		for (int i = 0; i < bubbles.length; i++) {
+			 println("drawing bubble "+i);
+			pushMatrix();
+			translate(sx+i*100,sy,sz);
+			bubbles[i].disableStyle();
+			bubbles[i].display();
+			popMatrix();
 		}
 	}
-	shape(s);
-	popMatrix();
-
-        for (int i = 0; i < bubbles.length; i++) { println("drawing bubble "+i); bubbles[i].display(); }
-
-	resetShader();
-
-	hint(DISABLE_DEPTH_TEST);
-	fill((float) moonlander.getValue("fadecolorR"), (float) moonlander.getValue("fadecolorG"), (float) moonlander.getValue("fadecolorB"), (float) moonlander.getValue("fade"));
-	rect(0, 0, width * 2, height * 2);
-	hint(ENABLE_DEPTH_TEST);
 }

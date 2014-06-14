@@ -18,23 +18,37 @@ int CANVAS_HEIGHT = 1080/2;
 PShape s,b; // s is the ocean,  b is bubble
 PShader oceanShader;
 
-Class Hexagon {
+float currentTime; // = moonlander.getCurrentTime();
+float lastTime=0;
+
+class Hexagon {
 	PShape h;
 
-	Hexagon(float side) {
+	Hexagon(float side, int a) {
 		h = createShape();
 		h.beginShape();
+//		fill(a,0,0,200);
+//		stroke(0,0,200);
 		//h.fill();
 //		h.stroke();
 //		float trimid = tan(PI/6)*side/2;
-		float trih = sin(PI/6)*side; // height of triangle (hexagon consists of 6 triangles)
-		h.vertex(0,trih);
-		h.vertex(side/2,0);
-		h.vertex(side*1.5,0);
-		h.vertex(side*2,trih);
-		h.vertex(side*1.5, trih*2);
-		h.vertex(side/2, trih*2);
+		float trih = cos(PI/6)*side; // height of triangle (hexagon consists of 6 triangles)
+		h.vertex(-side,0);
+		h.vertex(-side/2, -trih);
+		h.vertex(side/2, -trih);
+		h.vertex(side,0);
+		h.vertex(side/2, trih);
+		h.vertex(-side/2, trih);
 		h.endShape(CLOSE);
+		h.disableStyle();
+	}
+
+	PVector getVertex(int index) { return h.getVertex(index); }
+
+	int getVertexCount() { return h.getVertexCount(); }
+
+	void setVertex(int index, PVector v) {
+		h.setVertex(index, v);
 	}
 
 	void display() { shape(h); }
@@ -43,6 +57,25 @@ void drawTrail(int a, int r, int g, int b) {
 	stroke(a,r,g,b);
 	fill(a,r,g,b);
 
+}
+
+void rec(int level, Hexagon h) {
+	if (level>0) {
+//		resetShader();
+//		fill(level*20,200-level*30,200);
+//		stroke(0,0,200);
+		h.display();
+		if (level > 1) {
+			for (int i = 0; i < 6; i++) {
+				pushMatrix();
+//				scale(0.8,0.8);
+				PVector v = h.getVertex(i);
+				translate(v.x*2.0*sin((float)moonlander.getCurrentTime()),v.y*2.0*sin((float)moonlander.getCurrentTime()));
+				rec(level-1,h);
+				popMatrix();
+			}
+		}
+	}
 }
 
 Hexagon hex;
@@ -99,7 +132,7 @@ void setup() {
 	oceanShader.set("color_treshold7", 0.4);
 
 	// create hexagon
-	hex = new Hexagon(50);
+	hex = new Hexagon(100, 255);
 
 	moonlander.start();
 }
@@ -107,31 +140,33 @@ void setup() {
 void draw() {
 	// update moonlander with rocket
 	moonlander.update();
-
-	oceanShader.set("baseColor", (float) moonlander.getValue("water_R"), (float) moonlander.getValue("water_G"), (float) moonlander.getValue("water_B"), (float) moonlander.getValue("water_alpha"));
-	background(0, 0, 0);
-
-	//directionalLight(255, 255, 255, -(pow(sin(radians((float) moonlander.getCurrentTime())), 2)+300 / float(width) - 0.5) * 2, -(300 / float(height) - 0.5) * 2, -1);
-	directionalLight(255, 255, 255, 0, 1, 0);
-	// Center the view
-	pushMatrix();
-	translate((float) moonlander.getValue("camera_x"),
-			(float) moonlander.getValue("camera_y"),
-			(float) moonlander.getValue("camera_z"));
-	rotateX(radians((float) moonlander.getValue("rotate_x")));
-	rotateZ(radians((float) moonlander.getValue("rotate_z")));
-	rotateY(radians((float) moonlander.getValue("rotate_y")));
-	// Move up and backwards - away from the origin
-	//translate(-2000, 1000, -2000);
-	scale(500);
-	//lights();
-	// Rotate the viewport a bit with mouse
-	//rotateY((mouseX - width/2) * 0.003);
-	//rotateX((mouseY - height/2) * -0.003);
+	currentTime = (float) moonlander.getCurrentTime();
 
 	int scene = (int) moonlander.getValue("scene");
 
-	if(scene == 1) {
+	if(scene == 1 || scene == 2) {
+
+		oceanShader.set("baseColor", (float) moonlander.getValue("water_R"), (float) moonlander.getValue("water_G"), (float) moonlander.getValue("water_B"), (float) moonlander.getValue("water_alpha"));
+		background(0, 0, 0);
+
+		//directionalLight(255, 255, 255, -(pow(sin(radians((float) moonlander.getCurrentTime())), 2)+300 / float(width) - 0.5) * 2, -(300 / float(height) - 0.5) * 2, -1);
+		directionalLight(255, 255, 255, 0, 1, 0);
+		// Center the view
+		pushMatrix();
+		translate((float) moonlander.getValue("camera_x"),
+				(float) moonlander.getValue("camera_y"),
+				(float) moonlander.getValue("camera_z"));
+		rotateX(radians((float) moonlander.getValue("rotate_x")));
+		rotateZ(radians((float) moonlander.getValue("rotate_z")));
+		rotateY(radians((float) moonlander.getValue("rotate_y")));
+		// Move up and backwards - away from the origin
+		//translate(-2000, 1000, -2000);
+		scale(500);
+		//lights();
+		// Rotate the viewport a bit with mouse
+		//rotateY((mouseX - width/2) * 0.003);
+		//rotateX((mouseY - height/2) * -0.003);
+
 		shader(oceanShader);
 
 		//rotate(pmouseX / 360.0, 1, 0, 0);
@@ -147,44 +182,63 @@ void draw() {
 				child.setVertex(i, v);
 			}
 		}
-	}
-	shape(s);
+		shape(s);
 
-	// draw bubbles
-	float bx = (float) moonlander.getValue("SphereX");
-	float by = (float) moonlander.getValue("SphereY");
-	float bz = (float) moonlander.getValue("SphereZ");
-	for (int i = 0; i < 1; i++) {
-		pushMatrix();
-		rotateY(-PI/2); // make the axises correct in a scientific way
-		translate(bx, by, bz);
-		shape(b);
+		if (scene == 2) {
+			// draw bubbles
+			float bx = (float) moonlander.getValue("SphereX");
+			float by = (float) moonlander.getValue("SphereY");
+			float bz = (float) moonlander.getValue("SphereZ");
+			for (int i = 0; i < 1; i++) {
+				pushMatrix();
+				rotateY(-PI/2); // make the axises correct in a scientific way
+				translate(bx, by, bz);
+				shape(b);
+				popMatrix();
+			}
+		}
+
 		popMatrix();
 	}
-	/*
-	for (int i = 0; i < 1; i++) {
-		pushMatrix();
-		rotateY(-PI/2); // make the axises correct in a scientific way
-		translate(bx, by, bz);
-		sphereDetail(8, 8);
-		sphere(100);
-		popMatrix();
-	}
-	*/
-	popMatrix();
 
+	int level = (int) moonlander.getValue("Recursion level");
 	if (scene == 3) {
+		resetShader();
+		background(255,255,255);
+
+		// make nice background
+		int numRect = (int) moonlander.getValue("Rectangel #");
+		if (numRect > 1) {
+			for (int i = 0; i < numRect; i++) {
+				fill(255-random(0,100),50*sin(currentTime), 100-currentTime%30,200-currentTime%30);
+				rect(0,CANVAS_HEIGHT/numRect*i,CANVAS_WIDTH*1.5,CANVAS_HEIGHT/(numRect-1));
+			}
+		}
+
 		pushMatrix();
 		translate(CANVAS_WIDTH/2,CANVAS_HEIGHT/2);
-		fill(0,0,200);
-		stroke(0,0,200);
-		hex.display();
-		pullMatrix();
+		fill(.8,200,100-(100*sin((float)moonlander.getCurrentTime())),50);
+		stroke(250,0,0);
+		strokeWeight(2);
+//		hex.display();
+		int rotate = (int) moonlander.getValue("Rotate");
+		if (rotate == 1 && lastTime != currentTime) {
+		for (int i = 0; i < hex.getVertexCount(); i++ ) {
+//			fill(0, 200*i, 255-i*20);
+			PVector v = hex.getVertex(i);
+			v.x += cos(PI*(float)millis()/1000);
+			v.y += sin(PI*(float)millis()/1000);
+			hex.setVertex(i, v);
+		}
+		}
+		rec(level,hex);
+//		rect(0,0,100,100);
+		popMatrix();
+		lastTime = currentTime;
 	}
 
-
-	hint(DISABLE_DEPTH_TEST);
-	fill((float) moonlander.getValue("fadecolorR"), (float) moonlander.getValue("fadecolorG"), (float) moonlander.getValue("fadecolorB"), (float) moonlander.getValue("fade"));
-	rect(0, 0, width * 2, height * 2);
-	hint(ENABLE_DEPTH_TEST);
+//	hint(DISABLE_DEPTH_TEST);
+//	fill((float) moonlander.getValue("fadecolorR"), (float) moonlander.getValue("fadecolorG"), (float) moonlander.getValue("fadecolorB"), (float) moonlander.getValue("fade"));
+//	rect(0, 0, width * 2, height * 2);
+//	hint(ENABLE_DEPTH_TEST);
 }

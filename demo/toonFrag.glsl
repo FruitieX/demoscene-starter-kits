@@ -6,6 +6,7 @@ precision mediump int;
 #define PROCESSING_LIGHT_SHADER
 
 uniform float fraction;
+uniform vec3 color1, color2, color3, color4;
 
 varying vec4 vertColor;
 varying vec3 vertNormal;
@@ -17,13 +18,13 @@ void main() {
   intensity = max(0.0, dot(vertLightDir, vertNormal));
 
   if (intensity > pow(0.95, fraction)) {
-    color = vec4(vec3(0.0, .6, 1.0), 1.0);
+    color = vec4(color1, 1.0);
   } else if (intensity > pow(0.5, fraction)) {
-    color = vec4(vec3(0.05, 0.3, 0.9), 1.0);
+    color = vec4(color2, 1.0);
   } else if (intensity > pow(0.25, fraction)) {
-    color = vec4(vec3(0, 0, 0.3), 1.0);
+    color = vec4(color3, 1.0);
   } else {
-    color = vec4(vec3(0, 0, 0.1), 1.0);
+    color = vec4(color4, 1.0);
   }
 
   gl_FragColor = color * vertColor;  

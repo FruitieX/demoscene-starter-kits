@@ -99,7 +99,7 @@ void draw() {
 
 	int scene = (int) moonlander.getValue("scene");
 
-	if(scene == 1) {
+	if(scene == 1 || scene == 2) {
 		shader(oceanShader);
 
 		//rotate(pmouseX / 360.0, 1, 0, 0);
@@ -118,32 +118,31 @@ void draw() {
 	}
 	shape(s);
 
-	// draw bubbles
-	float bx = (float) moonlander.getValue("SphereX");
-	float by = (float) moonlander.getValue("SphereY");
-	float bz = (float) moonlander.getValue("SphereZ");
-	for (int i = 0; i < 1; i++) {
-		pushMatrix();
-		rotateY(-PI/2); // make the axises correct in a scientific way
-		translate(bx, by, bz);
-		shape(b);
-		popMatrix();
-	}
-	/*
-	for (int i = 0; i < 1; i++) {
-		pushMatrix();
-		rotateY(-PI/2); // make the axises correct in a scientific way
-		translate(bx, by, bz);
-		sphereDetail(8, 8);
-		sphere(100);
-		popMatrix();
-	}
-	*/
-	popMatrix();
-
 	if (scene == 2) {
+		// draw bubbles
+		float bx = (float) moonlander.getValue("SphereX");
+		float by = (float) moonlander.getValue("SphereY");
+		float bz = (float) moonlander.getValue("SphereZ");
+		for (int i = 0; i < 1; i++) {
+			pushMatrix();
+			rotateY(-PI/2); // make the axises correct in a scientific way
+			translate(bx, by, bz);
+			shape(b);
+			popMatrix();
+		}
+		/*
+		for (int i = 0; i < 1; i++) {
+			pushMatrix();
+			rotateY(-PI/2); // make the axises correct in a scientific way
+			translate(bx, by, bz);
+			sphereDetail(8, 8);
+			sphere(100);
+			popMatrix();
+		}
+		*/
 	}
 
+	popMatrix();
 
 	hint(DISABLE_DEPTH_TEST);
 	fill((float) moonlander.getValue("fadecolorR"), (float) moonlander.getValue("fadecolorG"), (float) moonlander.getValue("fadecolorB"), (float) moonlander.getValue("fade"));

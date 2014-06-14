@@ -27,6 +27,8 @@ class Bubble {
   }
   
   void display() { shape(b); }
+
+//	void setFillColor(int a, int r, int g, int blue) { Fill(a,r,g,blue); }
 }
 
 Bubble[] bubbles = new Bubble[3];
@@ -84,6 +86,7 @@ void setup() {
         bubbles[0] = new Bubble(createShape(SPHERE, size, size));
         bubbles[1] = new Bubble(createShape(SPHERE, size*.7, size*.7));
         bubbles[2] = new Bubble(createShape(SPHERE, size*.5, size*.5));
+//	for (int i = 0; i < bubbles.length; i++) bubbles[i].setFillColor(100,100,100,255);
 
 	moonlander.start();
 }
@@ -133,7 +136,19 @@ void draw() {
 	shape(s);
 	popMatrix();
 
-        for (int i = 0; i < bubbles.length; i++) { println("drawing bubble "+i); bubbles[i].display(); }
+	lights();
+
+	fill(100,100,100,255);
+	float sx = (float) moonlander.getValue("SphereX");
+	float sy = (float) moonlander.getValue("SphereY");
+	float sz = (float) moonlander.getValue("SphereZ");
+        for (int i = 0; i < bubbles.length; i++) {
+		 println("drawing bubble "+i);
+		pushMatrix();
+		translate(sx+i*100,sy,sz);
+		bubbles[i].display();
+		popMatrix();
+	}
 
 	resetShader();
 }

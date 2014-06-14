@@ -27,6 +27,7 @@ void setup() {
 	noStroke();
 	colorMode(RGB, 1);
 
+	perspective(PI/3.0,(float)width/height,1,100000);
 	s = loadShape("flatgrid.obj");
 	/*
 	s = createShape();
@@ -86,8 +87,8 @@ void draw() {
 			(float) moonlander.getValue("camera_y"),
 			(float) moonlander.getValue("camera_z"));
 	rotateX(radians((float) moonlander.getValue("rotate_x")));
-	rotateY(radians((float) moonlander.getValue("rotate_y")));
 	rotateZ(radians((float) moonlander.getValue("rotate_z")));
+	rotateY(radians((float) moonlander.getValue("rotate_y")));
 	// Move up and backwards - away from the origin
 	//translate(-2000, 1000, -2000);
 	scale(500);
@@ -105,9 +106,9 @@ void draw() {
 
 		for(int i = 0; i < child.getVertexCount(); i++) {
 			PVector v = child.getVertex(i);
-			v.y = (float) moonlander.getValue("wave1") * (sin(v.x / 2.0 + (float) moonlander.getCurrentTime()) + cos(v.z / 2.0 + (float) moonlander.getCurrentTime()));
-			v.y += (float) moonlander.getValue("wave2") * (sin(v.x / 5.0 + (float) moonlander.getCurrentTime()) + cos(v.z / 5.0 + (float) moonlander.getCurrentTime()));
-			v.y += (float) moonlander.getValue("wave3") * (sin(v.x / 7.0 + (float) moonlander.getCurrentTime()) + cos(v.z / 7.0 + (float) moonlander.getCurrentTime()));
+			v.y = (float) moonlander.getValue("wave1") * (sin(v.x * (float) moonlander.getValue("wave1_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave1_spd") + (float) moonlander.getCurrentTime()));
+			v.y += (float) moonlander.getValue("wave2") * (sin(v.x * (float) moonlander.getValue("wave2_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave2_spd") + (float) moonlander.getCurrentTime()));
+			v.y += (float) moonlander.getValue("wave3") * (sin(v.x * (float) moonlander.getValue("wave3_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave3_spd") + (float) moonlander.getCurrentTime()));
 			v.y += (float) moonlander.getValue("wave4") * ((v.x * v.x + v.z * v.z * v.z) % 20);
 			child.setVertex(i, v);
 		}

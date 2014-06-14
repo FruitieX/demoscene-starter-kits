@@ -88,9 +88,9 @@ void draw() {
 
 		for(int i = 0; i < child.getVertexCount(); i++) {
 			PVector v = child.getVertex(i);
-			v.y = sin(v.x / 2.0 + moonlander.getCurrentTime() / 1000.0) + cos(v.z / 2.0 + moonlander.getCurrentTime() / 1000.0);
-			v.y += 0.5 * sin(v.x / 5.0 + moonlander.getCurrentTime() / 1000.0) + cos(v.z / 5.0 + moonlander.getCurrentTime() / 1000.0);
-			v.y += 0.5 * sin(v.x / 7.0 + moonlander.getCurrentTime() / 1000.0) + cos(v.z / 7.0 + moonlander.getCurrentTime() / 1000.0);
+			v.y = sin(v.x / 2.0 + (float) moonlander.getCurrentTime() / 1000.0) + cos(v.z / 2.0 + (float) moonlander.getCurrentTime() / 1000.0);
+			v.y += 0.5 * sin(v.x / 5.0 + (float) moonlander.getCurrentTime() / 1000.0) + cos(v.z / 5.0 + (float) moonlander.getCurrentTime() / 1000.0);
+			v.y += 0.5 * sin(v.x / 7.0 + (float) moonlander.getCurrentTime() / 1000.0) + cos(v.z / 7.0 + (float) moonlander.getCurrentTime() / 1000.0);
 			v.y += 0.05 * ((v.x * v.x + v.z * v.z * v.z) % 20);
 			child.setVertex(i, v);
 		}

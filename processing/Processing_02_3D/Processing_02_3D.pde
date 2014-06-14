@@ -47,18 +47,39 @@ void draw() {
   popMatrix();
 
 
-  fill(255, 255, 0);
-  stroke(255,0,0);
-  for (float i=0;i<100;i++) {
-    for (float j=0;j<100;j++) {
-      point(3*i-100,-100+5*sin(i*.5-2*j),3*j+200);
-    }
-  }
+  
+//  fill(0, 0, 255);
+//  for (float i=0;i<100;i++) {
+//    for (float j=0;j<100;j++) {
+//      pushMatrix();
+////      stroke(255,0,0);
+////      point(3*i-100,-100+5*sin(i*.5-2*j),3*j+200);
+//      rotate(PI/2);
+//      translate(0,0,600-10*j);
+//      rotate(-PI/2);
+//      float triside = 40;
+//      float trimid = tan(PI/6)*triside/2;
+//      float trih = sin(PI/6)*triside;
+//      float x = triside*.75*i-1000;
+//      float y = -50+30*sin(i*.5+secs*2)*(1+cos(PI*j*.1)*.5);
+//
+//      translate(x,y);
+//      rotate(PI*secs);
+////      float z
+//      stroke(0,0,0);
+//      triangle(-triside/2 , -trimid, 0, trih, triside/2 , -trimid);
+////      ellipse(0 ,0 , 40 , 40); // very slow
+//      popMatrix();
+//    }
+//  }
+  
   stroke(0);
+  
         
   
   // Draw the bouncing ball
   
+  fill(255, 255, 0);
   pushMatrix();
   // Calculate the sphere trajectory
   float sphereY = abs(sin(secs*2.0)) * -400.0;

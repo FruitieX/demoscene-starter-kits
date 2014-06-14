@@ -18,6 +18,35 @@ int CANVAS_HEIGHT = 1080/2;
 PShape s,b; // s is the ocean,  b is bubble
 PShader oceanShader;
 
+Class Hexagon {
+	PShape h;
+
+	Hexagon(float side) {
+		h = createShape();
+		h.beginShape();
+		//h.fill();
+//		h.stroke();
+//		float trimid = tan(PI/6)*side/2;
+		float trih = sin(PI/6)*side; // height of triangle (hexagon consists of 6 triangles)
+		h.vertex(0,trih);
+		h.vertex(side/2,0);
+		h.vertex(side*1.5,0);
+		h.vertex(side*2,trih);
+		h.vertex(side*1.5, trih*2);
+		h.vertex(side/2, trih*2);
+		h.endShape(CLOSE);
+	}
+
+	void display() { shape(h); }
+}
+void drawTrail(int a, int r, int g, int b) {
+	stroke(a,r,g,b);
+	fill(a,r,g,b);
+
+}
+
+Hexagon hex;
+
 void setup() {
 	// The P3D parameter enables accelerated 3D rendering.
         moonlander = Moonlander.initWithSoundtrack(this, "graffa.wav", 100, 4);
@@ -68,6 +97,9 @@ void setup() {
 	oceanShader.set("color_treshold5", 0.6);
 	oceanShader.set("color_treshold6", 0.5);
 	oceanShader.set("color_treshold7", 0.4);
+
+	// create hexagon
+	hex = new Hexagon(50);
 
 	moonlander.start();
 }
@@ -141,7 +173,13 @@ void draw() {
 	*/
 	popMatrix();
 
-	if (scene == 2) {
+	if (scene == 3) {
+		pushMatrix();
+		translate(CANVAS_WIDTH/2,CANVAS_HEIGHT/2);
+		fill(0,0,200);
+		stroke(0,0,200);
+		hex.display();
+		pullMatrix();
 	}
 
 

@@ -48,7 +48,14 @@ void draw() {
 
 
   fill(255, 255, 0);
-  
+  stroke(255,0,0);
+  for (float i=0;i<100;i++) {
+    for (float j=0;j<100;j++) {
+      point(3*i-100,-100+5*sin(i*.5-2*j),3*j+200);
+    }
+  }
+  stroke(0);
+        
   
   // Draw the bouncing ball
   

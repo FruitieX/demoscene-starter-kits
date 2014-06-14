@@ -21,8 +21,8 @@ import ddf.minim.effects.*;
 // These control how big the opened window is.
 // Before you release your demo, set these to 
 // full HD resolution (1920x1080).
-int CANVAS_WIDTH = 480;
-int CANVAS_HEIGHT = 360;
+int CANVAS_WIDTH = 960;
+int CANVAS_HEIGHT = 720;
 
 // You can skip backwards/forwards in your demo by using the 
 // arrow keys; this controls how many milliseconds you skip
@@ -46,9 +46,9 @@ AudioPlayer song;
  */
 void setupAudio() {
   minim = new Minim(this);
-  song = minim.loadFile("../common/tekno_127bpm.mp3");
+  song = minim.loadFile("../common/KevinBryce_Planet_ender.mp3");
   // Uncomment this if you want the demo to start instantly
-  // song.play();
+  song.play();
 }
 
 /*

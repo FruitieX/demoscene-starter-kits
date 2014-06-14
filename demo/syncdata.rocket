@@ -10,28 +10,32 @@
 		<track name="camera_z">
 			<key row="0" value="-2725.4" interpolation="0"/>
 		</track>
-		<track name="rotate_x"/>
+		<track name="rotate_x">
+			<key row="0" value="-20" interpolation="0"/>
+		</track>
 		<track name="rotate_y">
 			<key row="0" value="-226" interpolation="0"/>
 		</track>
-		<track name="rotate_z"/>
+		<track name="rotate_z">
+			<key row="0" value="0" interpolation="0"/>
+		</track>
 		<track name="wave1">
-			<key row="0" value="0.2" interpolation="0"/>
+			<key row="0" value="0.1" interpolation="0"/>
 		</track>
 		<track name="wave1_spd">
 			<key row="0" value="2" interpolation="0"/>
 		</track>
 		<track name="wave2">
-			<key row="0" value="0.2" interpolation="0"/>
+			<key row="0" value="0.1" interpolation="0"/>
 		</track>
 		<track name="wave2_spd">
 			<key row="0" value="2" interpolation="0"/>
 		</track>
 		<track name="wave3">
-			<key row="0" value="0.2" interpolation="0"/>
+			<key row="0" value="0.1" interpolation="0"/>
 		</track>
 		<track name="wave3_spd">
-			<key row="0" value="0" interpolation="0"/>
+			<key row="0" value="5" interpolation="0"/>
 		</track>
 		<track name="wave4">
 			<key row="0" value="0.01" interpolation="0"/>

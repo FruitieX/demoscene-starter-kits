@@ -103,7 +103,7 @@ void draw() {
 	background(0, 0, 0);
 
 	//directionalLight(255, 255, 255, -(pow(sin(radians((float) moonlander.getCurrentTime())), 2)+300 / float(width) - 0.5) * 2, -(300 / float(height) - 0.5) * 2, -1);
-	directionalLight(255, 255, 255, 0, -1, 0);
+	directionalLight(255, 255, 255, 0, 1, 0);
 	// Center the view
 	pushMatrix();
 	translate((float) moonlander.getValue("camera_x"),
@@ -120,7 +120,8 @@ void draw() {
 	//rotateY((mouseX - width/2) * 0.003);
 	//rotateX((mouseY - height/2) * -0.003);
 
-	int scene = moonlander.getValue("scene");
+	int scene = (int) moonlander.getValue("scene");
+
 	if(scene == 1) {
 		shader(oceanShader);
 
@@ -138,7 +139,6 @@ void draw() {
 			}
 		}
 		shape(s);
-		popMatrix();
 
 		lights();
 
@@ -155,19 +155,15 @@ void draw() {
 
 		resetShader();
 
-		hint(DISABLE_DEPTH_TEST);
-		fill((float) moonlander.getValue("fadecolorR"), (float) moonlander.getValue("fadecolorG"), (float) moonlander.getValue("fadecolorB"), (float) moonlander.getValue("fade"));
-		rect(0, 0, width * 2, height * 2);
-		hint(ENABLE_DEPTH_TEST);
 	} else if (scene == 2) {
 		resetShader();
 
 		fill(100,100,100,255);
-//		float sx = (float) moonlander.getValue("SphereX");
-//		float sy = (float) moonlander.getValue("SphereY");
-//		float sz = (float) moonlander.getValue("SphereZ");
+		float sx = (float) moonlander.getValue("SphereX");
+		float sy = (float) moonlander.getValue("SphereY");
+		float sz = (float) moonlander.getValue("SphereZ");
 		for (int i = 0; i < bubbles.length; i++) {
-			 println("drawing bubble "+i);
+			println("drawing bubble "+i);
 			pushMatrix();
 			translate(sx+i*100,sy,sz);
 			bubbles[i].disableStyle();
@@ -175,4 +171,11 @@ void draw() {
 			popMatrix();
 		}
 	}
+
+	popMatrix();
+
+	hint(DISABLE_DEPTH_TEST);
+	fill((float) moonlander.getValue("fadecolorR"), (float) moonlander.getValue("fadecolorG"), (float) moonlander.getValue("fadecolorB"), (float) moonlander.getValue("fade"));
+	rect(0, 0, width * 2, height * 2);
+	hint(ENABLE_DEPTH_TEST);
 }

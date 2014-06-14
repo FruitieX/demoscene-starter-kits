@@ -17,24 +17,8 @@ int scene = 1;
 
 int CANVAS_WIDTH = 1920/2;
 int CANVAS_HEIGHT = 1080/2;
-PShape s;
+PShape s,b; // s is the ocean,  b is bubble
 PShader oceanShader;
-
-class Bubble {
-  PShape b;
-  
-  Bubble(PShape b_) {
-    b = b_; //createShape(SPHERE, x, y, size, size);
-//    b.setFill(color(100,100,255);
-  }
-  
-  void display() { shape(b); }
-
-	void disableStyle() { b.disableStyle(); }
-//	void setFillColor(int a, int r, int g, int blue) { Fill(a,r,g,blue); }
-}
-
-Bubble[] bubbles = new Bubble[3];
 
 void setup() {
 	// The P3D parameter enables accelerated 3D rendering.
@@ -86,13 +70,6 @@ void setup() {
 	oceanShader.set("color_treshold6", 0.4);
 	oceanShader.set("color_treshold7", 0.3);
 
-	// create bubbles
-        float size = 100;
-        bubbles[0] = new Bubble(createShape(SPHERE, size, size));
-        bubbles[1] = new Bubble(createShape(SPHERE, size*.7, size*.7));
-        bubbles[2] = new Bubble(createShape(SPHERE, size*.5, size*.5));
-//	for (int i = 0; i < bubbles.length; i++) bubbles[i].setFillColor(100,100,100,255);
-
 	moonlander.start();
 }
 
@@ -100,7 +77,8 @@ void draw() {
 	// update moonlander with rocket
 	moonlander.update();
 
-	double bg_red = moonlander.getValue("background_red");
+	// load shape bubble
+	b = loadShape("bubble.obj");
 
 	background(0, 0, 0);
 
@@ -139,37 +117,32 @@ void draw() {
 		}
 	}
 	shape(s);
+
+	// draw bubbles
+	float bx = (float) moonlander.getValue("SphereX");
+	float by = (float) moonlander.getValue("SphereY");
+	float bz = (float) moonlander.getValue("SphereZ");
+	for (int i = 0; i < 1; i++) {
+		pushMatrix();
+		rotateY(-PI/2); // make the axises correct in a scientific way
+		translate(bx, by, bz);
+		shape(b);
+		popMatrix();
+	}
+	for (int i = 0; i < 1; i++) {
+		pushMatrix();
+		rotateY(-PI/2); // make the axises correct in a scientific way
+		translate(bx, by, bz);
+		sphereDetail(8, 8);
+		sphere(100);
+		popMatrix();
+	}
 	popMatrix();
 
 	lights();
 
-	float sx = (float) moonlander.getValue("SphereX");
-	float sy = (float) moonlander.getValue("SphereY");
-	float sz = (float) moonlander.getValue("SphereZ");
-	for (int i = 0; i < bubbles.length; i++) {
-		 println("drawing bubble "+i);
-		pushMatrix();
-		translate(sx+i*100,sy,sz);
-		bubbles[i].display();
-		popMatrix();
-	}
-
 	resetShader();
 
 	if (scene == 2) {
-		resetShader();
-
-		fill(100,100,100,255);
-//		float sx = (float) moonlander.getValue("SphereX");
-//		float sy = (float) moonlander.getValue("SphereY");
-//		float sz = (float) moonlander.getValue("SphereZ");
-		for (int i = 0; i < bubbles.length; i++) {
-			 println("drawing bubble "+i);
-			pushMatrix();
-			translate(sx+i*100,sy,sz);
-			bubbles[i].disableStyle();
-			bubbles[i].display();
-			popMatrix();
-		}
 	}
 }

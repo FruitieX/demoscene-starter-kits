@@ -18,6 +18,19 @@ int CANVAS_HEIGHT = 1080/2;
 PShape s;
 PShader oceanShader;
 
+class Bubble {
+  PShape b;
+  
+  Bubble(PShape b_) {
+    b = b_; //createShape(SPHERE, x, y, size, size);
+//    b.setFill(color(100,100,255);
+  }
+  
+  void display() { shape(b); }
+}
+
+Bubble[] bubbles = new Bubble[3];
+
 void setup() {
 	// The P3D parameter enables accelerated 3D rendering.
         moonlander = Moonlander.initWithSoundtrack(this, "graffa.wav", 100, 4);
@@ -68,6 +81,11 @@ void setup() {
 	oceanShader.set("color_treshold6", 0.4);
 	oceanShader.set("color_treshold7", 0.3);
 
+        float size = 100;
+        bubbles[0] = new Bubble(createShape(SPHERE, size, size));
+        bubbles[1] = new Bubble(createShape(SPHERE, size*.7, size*.7));
+        bubbles[2] = new Bubble(createShape(SPHERE, size*.5, size*.5));
+
 	moonlander.start();
 }
 
@@ -113,9 +131,10 @@ void draw() {
 			child.setVertex(i, v);
 		}
 	}
-
 	shape(s);
 	popMatrix();
+
+        for (int i = 0; i < bubbles.length; i++) { println("drawing bubble "+i); bubbles[i].display(); }
 
 	resetShader();
 }

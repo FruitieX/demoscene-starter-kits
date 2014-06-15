@@ -29,13 +29,13 @@ float mindist = 100;
 int ptnum = 300;
 
 PFont font;
-int tnum = 0, cnum = 0; // tnum = which word in credit it is on, cnum = which char
+//int tnum = 0, cnum = 0; // tnum = which word in credit it is on, cnum = which char
 float lastSec = 0; // to only update text in credits every 1 second
 String tempStr = ""; // holds the scrambled word in credits
 
 int getStrPos(String[] strarr, int index) {
 	int sum=0;
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 8; i++) {
 		if (index < sum+strarr[i].length()) return i;
 		sum += strarr[i].length();
 	}
@@ -43,7 +43,7 @@ int getStrPos(String[] strarr, int index) {
 }
 int getIndPos(String[] strarr, int index) {
 	int sum=0;
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 8; i++) {
 		if (index < sum+strarr[i].length()) return index-sum;
 		sum += strarr[i].length();
 	}
@@ -401,23 +401,26 @@ void draw() {
 		background(255);
 		fill(moonlander.getCurrentTime() % 255, 255, 255);
 
-		String[] holder = new String[4];
-		holder[0] = "Ihan sama, joo";
-		holder[1] = "Pingviinituutti";
-		holder[2] = "FruitieX";
-		holder[3] = "Craas";
+		String[] holder = new String[8];
+		holder[0] = "#Graffathon demokomp00000 ";
+		holder[1] = "Demo made by group ";
+		holder[2] = "Ihan sama, joo ";
+		holder[3] = "Members ";
+		holder[4] = "Pingviinituutti ";
+		holder[5] = "FruitieX ";
+		holder[6] = "Craas ";
+		holder[7] = "Huutoja kaikille, jooko? ";
+//		holder[0] = "Jag pratar kivasti svenska ";
 		text(holder[0],0,100);
 		int hlen = 0;
-		for (int i =0; i <4 ; i++) hlen += holder[i].length();
+//		for (int i =0; i <4 ; i++) hlen += holder[i].length();
 		int pos = (int) moonlander.getValue("CredPos");
 
 		println("Pos is "+pos+" Right now in word number "+ getStrPos(holder, pos)+"and pos "+getIndPos(holder,pos));
 //		for (int i = 0; i < holder.length(); i++) {
-		if (currentTime - lastSec > 0.2)	{
-			tempStr = scramble(holder[getStrPos(holder, pos)],holder[getStrPos(holder,pos)].length()-getIndPos(holder,pos));
+			tempStr = scramble(holder[getStrPos(holder, pos)],getIndPos(holder,pos));
 			lastSec = (int) currentTime;
 //			if (cnum == 0) tnum++;
-		}
 		text(tempStr,0,150);
 	}
 //		}

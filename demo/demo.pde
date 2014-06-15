@@ -17,7 +17,7 @@ Moonlander moonlander;
 
 int CANVAS_WIDTH = 1920/2;
 int CANVAS_HEIGHT = 1080/2;
-PShape s,b; // s is the ocean,  b is bubble
+PShape s,b; // s is the ocean,	b is bubble
 PShader oceanShader;
 
 float currentTime; // = moonlander.getCurrentTime();
@@ -177,13 +177,13 @@ void setup() {
 	// create hexagon
 	hex = new Hexagon(100, 255);
 
-        //line prep
-        points = new float[ptnum][3];
-        for (int i=0; i < ptnum; i++){
-          points[i][0] = random(20, width);
-          points[i][1] = random(20, height);
-          points[i][2] = random(20, width);
-        }
+		//line prep
+		points = new float[ptnum][3];
+		for (int i=0; i < ptnum; i++){
+		  points[i][0] = random(20, width);
+		  points[i][1] = random(20, height);
+		  points[i][2] = random(20, width);
+		}
 
 	moonlander.start();
 }
@@ -207,7 +207,7 @@ void draw() {
 	beat1 /= 300;
 	beat2 /= 300;
 
-	if(scene == 1 || scene == 2) {
+	if(scene == 1 || scene == 2 || scene == 3) {
 		oceanShader.set("baseColor", (float) moonlander.getValue("water_R"), (float) moonlander.getValue("water_G"), (float) moonlander.getValue("water_B"), (float) moonlander.getValue("water_alpha"));
 		background(0, 0, 0);
 
@@ -263,10 +263,17 @@ void draw() {
 		resetShader();
 		popMatrix();
 	}
+	if (scene == 3 || scene == 4) {
+		int level = (int) moonlander.getValue("Recursion level");
+		if(scene == 4) {
+			hint(DISABLE_DEPTH_TEST);
+			fill(0,0.2);
+			rect(0, 0, width * 2, height * 2);
+			hint(ENABLE_DEPTH_TEST);
+		}
 
-	int level = (int) moonlander.getValue("Recursion level");
-	if (scene == 3) {
-		background(255,255,255);
+		//background(0,0,0);
+		hint(DISABLE_DEPTH_TEST);
 
 		// make nice background
 		int numRect = (int) moonlander.getValue("Rectangel #");
@@ -279,6 +286,7 @@ void draw() {
 
 		pushMatrix();
 		translate(CANVAS_WIDTH/2,CANVAS_HEIGHT/2);
+		scale(max(1, beat1/3));
 		fill(.8,200,100-(100.0*sin((float)moonlander.getCurrentTime())),50);
 		stroke(0,0,0);
 		strokeWeight(2);
@@ -293,48 +301,52 @@ void draw() {
 				hex.setVertex(i, v);
 			}
 		}
+		rotateZ(currentTime);
+		rotateY(currentTime);
 		rec(level,hex);
 //		rect(0,0,100,100);
 		popMatrix();
 		lastTime = currentTime;
+		hint(ENABLE_DEPTH_TEST);
+	} else if (scene == 5){ //Lines.
+	/*
+		hint(DISABLE_DEPTH_TEST);
+		fill(0,2);
+		rect(0, 0, width * 2, height * 2);
+		hint(ENABLE_DEPTH_TEST);
+		*/
+		pushMatrix();
+		translate(width/2, height/2, 0);
+		pushMatrix();
+		rotateZ(radians(currentTime*30*3));
+		scale(radians(currentTime*30*0.1));
+		for (int i = 0; i < ptnum; i++){
+			points[i][0] += sin(radians(currentTime*30)*noise(points[i][0]+50))*random(-2, 2);
+			points[i][1] += cos(radians(currentTime*30)*noise(points[i][1]+13))*random(-2, 2);
+			points[i][2] += cos(radians(currentTime*30)*noise(points[i][2]))*random(-2, 2);
+			point(points[i][0], points[i][1], points[i][2]);
+		  }
+		fill(255);
+		stroke(255, 15);
+		blendMode(BLEND);
+
+		for (int i=0; i<ptnum; i++){
+			for (int j=0; j<ptnum; j++){
+				float d = dist(points[i][0], points[i][1], points[i][2], points[j][0], points[j][1], points[j][2]);
+				if (d < mindist){
+					line(points[i][0], points[i][1], points[i][2], points[j][0], points[j][1], points[j][2]);
+				}
+			}
+		}
+		popMatrix();
+		rotateY(radians(currentTime*30*4));
+		directionalLight(255, 255, 255, 0, 1, 0);
+		noStroke();
+		fill(155);
+		scale(10);
+		sphere(10);
+		popMatrix();
 	}
-        if (scene == 4){ //Lines.
-          hint(DISABLE_DEPTH_TEST);
-          fill(0,2);
-          rect(0, 0, width * 2, height * 2);
-          hint(ENABLE_DEPTH_TEST);  
-          pushMatrix();
-          translate(width/2, height/2, 0);
-          pushMatrix();
-          rotateZ(radians(currentTime*30*3));
-          scale(radians(currentTime*30*0.1));
-          for (int i = 0; i < ptnum; i++){
-            points[i][0] += sin(radians(currentTime*30)*noise(points[i][0]+50))*random(-2, 2);
-            points[i][1] += cos(radians(currentTime*30)*noise(points[i][1]+13))*random(-2, 2);
-            points[i][2] += cos(radians(currentTime*30)*noise(points[i][2]))*random(-2, 2);
-            point(points[i][0], points[i][1], points[i][2]); 
-          }
-          fill(255);
-          stroke(255, 15);
-          blendMode(BLEND);
-  
-          for (int i=0; i<ptnum; i++){
-            for (int j=0; j<ptnum; j++){
-              float d = dist(points[i][0], points[i][1], points[i][2], points[j][0], points[j][1], points[j][2]);     
-              if (d < mindist){
-                line(points[i][0], points[i][1], points[i][2], points[j][0], points[j][1], points[j][2]);
-              }
-            }
-          }
-          popMatrix();
-          rotateY(radians(currentTime*30*4));
-          directionalLight(255, 255, 255, 0, 1, 0);
-          noStroke();
-          fill(155);
-          scale(10);
-          sphere(10);
-          popMatrix();
-        }
 
 	hint(DISABLE_DEPTH_TEST);
 	fill((float) moonlander.getValue("fadecolorR"), (float) moonlander.getValue("fadecolorG"), (float) moonlander.getValue("fadecolorB"), (float) moonlander.getValue("fade"));

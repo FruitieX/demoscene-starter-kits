@@ -10,6 +10,8 @@
 import moonlander.library.*;
 
 import ddf.minim.*;
+import ddf.minim.analysis.*;
+import java.util.*;
 
 Moonlander moonlander;
 
@@ -20,6 +22,11 @@ PShader oceanShader;
 
 float currentTime; // = moonlander.getCurrentTime();
 float lastTime=0;
+
+//Lines variables
+float[][] points;
+float mindist = 100;
+int ptnum = 300;
 
 class Hexagon {
 	PShape h;
@@ -78,11 +85,47 @@ void rec(int level, Hexagon h) {
 	}
 }
 
+
+int windowsize = 4096; // fft-puskurin koko, muutettavissa napeilla a ja s
+
+int rate = 44100; // samplerate
+
 Hexagon hex;
+FFT fft;
+float[] sampledata;
+MultiChannelBuffer buffers;
+AudioPlayer audioplayer;
+Minim minim;
+
+int player_samplepos() {
+	float secs = (float) moonlander.getCurrentTime();
+	int samplepos = (int)(secs * rate);
+	samplepos -= windowsize/2;
+	samplepos = max(samplepos, 0);
+	samplepos = min(samplepos, sampledata.length - windowsize);
+	return samplepos;
+}
+
+void analyze() {
+	int samplepos = player_samplepos();
+	float[] window = Arrays.copyOfRange(sampledata, samplepos, samplepos + windowsize);
+	fft.forward(window);
+}
 
 void setup() {
+	// fft
+	frameRate(60);
+	minim = new Minim(this);
+	buffers = new MultiChannelBuffer(2, 2);
+	minim.loadFileIntoBuffer("graffa.wav", buffers);
+	sampledata = buffers.getChannel(0);
+	fft = new FFT(windowsize, rate);
+	fft.window(FFT.HAMMING);
+
+	randomSeed(42);
+
 	// The P3D parameter enables accelerated 3D rendering.
-        moonlander = Moonlander.initWithSoundtrack(this, "graffa.wav", 100, 4);
+	moonlander = Moonlander.initWithSoundtrack(this, "graffa.wav", 89, 4);
 	size(CANVAS_WIDTH, CANVAS_HEIGHT, P3D);
 	rectMode(CENTER);
 
@@ -134,6 +177,14 @@ void setup() {
 	// create hexagon
 	hex = new Hexagon(100, 255);
 
+        //line prep
+        points = new float[ptnum][3];
+        for (int i=0; i < ptnum; i++){
+          points[i][0] = random(20, width);
+          points[i][1] = random(20, height);
+          points[i][2] = random(20, width);
+        }
+
 	moonlander.start();
 }
 
@@ -141,11 +192,22 @@ void draw() {
 	// update moonlander with rocket
 	moonlander.update();
 	currentTime = (float) moonlander.getCurrentTime();
+	analyze();
 
 	int scene = (int) moonlander.getValue("scene");
 
-	if(scene == 1 || scene == 2) {
+	float beat1 = 0;
+	float beat2 = 0;
+	for(int i = 0; i < (int) moonlander.getValue("beat1_band"); i++) {
+		beat1 += fft.getBand(i);
+	}
+	for(int i = (int) moonlander.getValue("beat2_band"); i < (int) moonlander.getValue("beat2_band"); i++) {
+		beat2 += fft.getBand(i);
+	}
+	beat1 /= 300;
+	beat2 /= 300;
 
+	if(scene == 1 || scene == 2) {
 		oceanShader.set("baseColor", (float) moonlander.getValue("water_R"), (float) moonlander.getValue("water_G"), (float) moonlander.getValue("water_B"), (float) moonlander.getValue("water_alpha"));
 		background(0, 0, 0);
 
@@ -177,8 +239,8 @@ void draw() {
 				PVector v = child.getVertex(i);
 				v.y = (float) moonlander.getValue("wave1") * (sin(v.x * (float) moonlander.getValue("wave1_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave1_spd") + (float) moonlander.getCurrentTime()));
 				v.y += (float) moonlander.getValue("wave2") * (sin(v.x * (float) moonlander.getValue("wave2_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave2_spd") + (float) moonlander.getCurrentTime()));
-				v.y += (float) moonlander.getValue("wave3") * (sin(v.x * (float) moonlander.getValue("wave3_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave3_spd") + (float) moonlander.getCurrentTime()));
-				v.y += (float) moonlander.getValue("wave4") * ((v.x * v.x + v.z * v.z * v.z) % 20);
+				v.y += max(0.5, min(beat2, 1)) * (float) moonlander.getValue("wave3") * (sin(v.x * (float) moonlander.getValue("wave3_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave3_spd") + (float) moonlander.getCurrentTime()));
+				v.y += max(0.5, min(beat1, 1)) * (float) moonlander.getValue("wave4") * ((v.x * v.x + v.z * v.z * v.z) % 20);
 				child.setVertex(i, v);
 			}
 		}
@@ -198,6 +260,7 @@ void draw() {
 			}
 		}
 
+		resetShader();
 		popMatrix();
 	}
 	resetShader();
@@ -233,22 +296,59 @@ void draw() {
 //		hex.display();
 		int rotate = (int) moonlander.getValue("Rotate");
 		if (rotate == 1 && lastTime != currentTime) {
-		for (int i = 0; i < hex.getVertexCount(); i++ ) {
-//			fill(0, 200*i, 255-i*20);
-			PVector v = hex.getVertex(i);
-			v.x += cos(PI*(float)millis()/1000);
-			v.y += sin(PI*(float)millis()/1000);
-			hex.setVertex(i, v);
-		}
+			for (int i = 0; i < hex.getVertexCount(); i++ ) {
+	//			fill(0, 200*i, 255-i*20);
+				PVector v = hex.getVertex(i);
+				v.x += cos(PI*(float)millis()/1000.0);
+				v.y += sin(PI*(float)millis()/1000.0);
+				hex.setVertex(i, v);
+			}
 		}
 		rec(level,hex);
 //		rect(0,0,100,100);
 		popMatrix();
 		lastTime = currentTime;
 	}
+        if (scene == 4){ //Lines.
+          hint(DISABLE_DEPTH_TEST);
+          fill(0,2);
+          rect(0, 0, width * 2, height * 2);
+          hint(ENABLE_DEPTH_TEST);  
+          pushMatrix();
+          translate(width/2, height/2, 0);
+          pushMatrix();
+          rotateZ(radians(currentTime*30*3));
+          scale(radians(currentTime*30*0.1));
+          for (int i = 0; i < ptnum; i++){
+            points[i][0] += sin(radians(currentTime*30)*noise(points[i][0]+50))*random(-2, 2);
+            points[i][1] += cos(radians(currentTime*30)*noise(points[i][1]+13))*random(-2, 2);
+            points[i][2] += cos(radians(currentTime*30)*noise(points[i][2]))*random(-2, 2);
+            point(points[i][0], points[i][1], points[i][2]); 
+          }
+          fill(255);
+          stroke(255, 15);
+          blendMode(BLEND);
+  
+          for (int i=0; i<ptnum; i++){
+            for (int j=0; j<ptnum; j++){
+              float d = dist(points[i][0], points[i][1], points[i][2], points[j][0], points[j][1], points[j][2]);     
+              if (d < mindist){
+                line(points[i][0], points[i][1], points[i][2], points[j][0], points[j][1], points[j][2]);
+              }
+            }
+          }
+          popMatrix();
+          rotateY(radians(currentTime*30*4));
+          directionalLight(255, 255, 255, 0, 1, 0);
+          noStroke();
+          fill(155);
+          scale(10);
+          sphere(10);
+          popMatrix();
+        }
 
-//	hint(DISABLE_DEPTH_TEST);
-//	fill((float) moonlander.getValue("fadecolorR"), (float) moonlander.getValue("fadecolorG"), (float) moonlander.getValue("fadecolorB"), (float) moonlander.getValue("fade"));
-//	rect(0, 0, width * 2, height * 2);
-//	hint(ENABLE_DEPTH_TEST);
+	hint(DISABLE_DEPTH_TEST);
+	fill((float) moonlander.getValue("fadecolorR"), (float) moonlander.getValue("fadecolorG"), (float) moonlander.getValue("fadecolorB"), (float) moonlander.getValue("fade"));
+	rect(0, 0, width * 2, height * 2);
+	hint(ENABLE_DEPTH_TEST);
 }

@@ -82,7 +82,8 @@
 			<key row="128" value="0" interpolation="0"/>
 			<key row="257" value="30" interpolation="0"/>
 			<key row="353" value="-16.2" interpolation="0"/>
-			<key row="401" value="-16.2" interpolation="0"/>
+			<key row="401" value="90" interpolation="1"/>
+			<key row="448" value="-40" interpolation="0"/>
 		</track>
 		<track name="rotate_z">
 			<key row="0" value="0" interpolation="0"/>
@@ -232,7 +233,7 @@
 			<key row="96" value="1" interpolation="0"/>
 			<key row="320" value="0.2" interpolation="0"/>
 			<key row="352" value="0" interpolation="0"/>
-			<key row="400" value="0" interpolation="0"/>
+			<key row="400" value="2" interpolation="0"/>
 		</track>
 		<track name="water_G">
 			<key row="0" value="1" interpolation="1"/>
@@ -244,7 +245,7 @@
 			<key row="127" value="2" interpolation="0"/>
 			<key row="320" value="0.7" interpolation="0"/>
 			<key row="352" value="0.7" interpolation="0"/>
-			<key row="400" value="0.4" interpolation="0"/>
+			<key row="400" value="2" interpolation="0"/>
 		</track>
 		<track name="water_B">
 			<key row="0" value="1" interpolation="1"/>
@@ -256,7 +257,7 @@
 			<key row="127" value="0" interpolation="0"/>
 			<key row="320" value="1" interpolation="0"/>
 			<key row="352" value="0.4" interpolation="0"/>
-			<key row="400" value="0.7" interpolation="0"/>
+			<key row="400" value="2" interpolation="0"/>
 		</track>
 		<track name="water_alpha">
 			<key row="0" value="0" interpolation="1"/>
@@ -346,6 +347,7 @@
 			<key row="256" value="255" interpolation="0"/>
 			<key row="320" value="20" interpolation="0"/>
 			<key row="352" value="0" interpolation="0"/>
+			<key row="401" value="255" interpolation="0"/>
 		</track>
 		<track name="bg_G">
 			<key row="0" value="0" interpolation="0"/>
@@ -353,7 +355,7 @@
 			<key row="256" value="255" interpolation="0"/>
 			<key row="320" value="70" interpolation="0"/>
 			<key row="352" value="70" interpolation="0"/>
-			<key row="401" value="50" interpolation="0"/>
+			<key row="401" value="255" interpolation="0"/>
 		</track>
 		<track name="bg_B">
 			<key row="0" value="0" interpolation="0"/>
@@ -361,7 +363,7 @@
 			<key row="256" value="255" interpolation="0"/>
 			<key row="320" value="100" interpolation="0"/>
 			<key row="352" value="40" interpolation="0"/>
-			<key row="401" value="80" interpolation="0"/>
+			<key row="401" value="255" interpolation="0"/>
 		</track>
 		<track name="lineScale">
 			<key row="256" value="20" interpolation="1"/>

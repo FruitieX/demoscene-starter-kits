@@ -80,7 +80,7 @@ void rec(int level, Hexagon h) {
 	}
 }
 
-int windowsize = 1024; // fft-puskurin koko, muutettavissa napeilla a ja s
+int windowsize = 4096; // fft-puskurin koko, muutettavissa napeilla a ja s
 int rate = 44100; // samplerate
 
 Hexagon hex;
@@ -114,6 +114,8 @@ void setup() {
 	sampledata = buffers.getChannel(0);
 	fft = new FFT(windowsize, rate);
 	fft.window(FFT.HAMMING);
+
+	randomSeed(42);
 
 	// The P3D parameter enables accelerated 3D rendering.
 	moonlander = Moonlander.initWithSoundtrack(this, "graffa.wav", 89, 4);
@@ -179,9 +181,18 @@ void draw() {
 
 	int scene = (int) moonlander.getValue("scene");
 
+	float beat1 = 0;
+	float beat2 = 0;
+	for(int i = 0; i < (int) moonlander.getValue("beat1_band"); i++) {
+		beat1 += fft.getBand(i);
+	}
+	for(int i = (int) moonlander.getValue("beat2_band"); i < (int) moonlander.getValue("beat2_band"); i++) {
+		beat2 += fft.getBand(i);
+	}
+	beat1 /= 300;
+	beat2 /= 300;
+
 	if(scene == 1 || scene == 2) {
-		float beat1 = fft.getBand((int) moonlander.getValue("beat1_band"));
-		float beat2 = fft.getBand((int) moonlander.getValue("beat2_band"));
 		oceanShader.set("baseColor", (float) moonlander.getValue("water_R"), (float) moonlander.getValue("water_G"), (float) moonlander.getValue("water_B"), (float) moonlander.getValue("water_alpha"));
 		background(0, 0, 0);
 
@@ -213,8 +224,8 @@ void draw() {
 				PVector v = child.getVertex(i);
 				v.y = (float) moonlander.getValue("wave1") * (sin(v.x * (float) moonlander.getValue("wave1_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave1_spd") + (float) moonlander.getCurrentTime()));
 				v.y += (float) moonlander.getValue("wave2") * (sin(v.x * (float) moonlander.getValue("wave2_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave2_spd") + (float) moonlander.getCurrentTime()));
-				v.y += max(0.5, min(beat2 / 10, 1)) * (float) moonlander.getValue("wave3") * (sin(v.x * (float) moonlander.getValue("wave3_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave3_spd") + (float) moonlander.getCurrentTime()));
-				v.y += max(0.5, min(beat1 / 10, 1)) * (float) moonlander.getValue("wave4") * ((v.x * v.x + v.z * v.z * v.z) % 20);
+				v.y += max(0.5, min(beat2, 1)) * (float) moonlander.getValue("wave3") * (sin(v.x * (float) moonlander.getValue("wave3_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave3_spd") + (float) moonlander.getCurrentTime()));
+				v.y += max(0.5, min(beat1, 1)) * (float) moonlander.getValue("wave4") * ((v.x * v.x + v.z * v.z * v.z) % 20);
 				child.setVertex(i, v);
 			}
 		}

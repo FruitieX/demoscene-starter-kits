@@ -30,7 +30,7 @@
 			<key row="65" value="-800.1" interpolation="1"/>
 			<key row="96" value="1800" interpolation="0"/>
 			<key row="97" value="120" interpolation="1"/>
-			<key row="127" value="2000" interpolation="0"/>
+			<key row="127" value="2100" interpolation="0"/>
 			<key row="128" value="0" interpolation="0"/>
 		</track>
 		<track name="rotate_x">
@@ -163,15 +163,19 @@
 			<key row="128" value="2" interpolation="0"/>
 		</track>
 		<track name="beat1_band">
-			<key row="0" value="0" interpolation="0"/>
+			<key row="0" value="50" interpolation="0"/>
+			<key row="284" value="50" interpolation="0"/>
 		</track>
 		<track name="beat2_band">
-			<key row="0" value="40" interpolation="0"/>
+			<key row="0" value="300" interpolation="0"/>
+			<key row="284" value="600" interpolation="0"/>
 		</track>
 		<track name="Rectangel #">
-			<key row="128" value="3" interpolation="0"/>
+			<key row="128" value="0" interpolation="0"/>
 		</track>
-		<track name="Rotate"/>
+		<track name="Rotate">
+			<key row="128" value="1" interpolation="0"/>
+		</track>
 	</tracks>
 	<bookmarks>
 		<bookmark row="16"/>

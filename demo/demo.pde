@@ -397,9 +397,10 @@ void draw() {
 	}
 
 	if (scene == 6) {
-		colorMode(RGB, 255);
+		colorMode(HSV, 255);
 		background(255);
-		fill(0,200,50);
+		fill(moonlander.getCurrentTime() % 255, 255, 255);
+
 		String[] holder = new String[4];
 		holder[0] = "Ihan sama, joo";
 		holder[1] = "Pingviinituutti";

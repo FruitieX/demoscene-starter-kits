@@ -15,8 +15,8 @@ import java.util.*;
 
 Moonlander moonlander;
 
-int CANVAS_WIDTH = 1920/2;
-int CANVAS_HEIGHT = 1080/2;
+int CANVAS_WIDTH = 1920;
+int CANVAS_HEIGHT = 1080;
 PShape s,b; // s is the ocean,  b is bubble
 PShader oceanShader;
 
@@ -236,12 +236,12 @@ void draw() {
 			}
 		}
 
+		resetShader();
 		popMatrix();
 	}
 
 	int level = (int) moonlander.getValue("Recursion level");
 	if (scene == 3) {
-		resetShader();
 		background(255,255,255);
 
 		// make nice background
@@ -275,8 +275,8 @@ void draw() {
 		lastTime = currentTime;
 	}
 
-//	hint(DISABLE_DEPTH_TEST);
-//	fill((float) moonlander.getValue("fadecolorR"), (float) moonlander.getValue("fadecolorG"), (float) moonlander.getValue("fadecolorB"), (float) moonlander.getValue("fade"));
-//	rect(0, 0, width * 2, height * 2);
-//	hint(ENABLE_DEPTH_TEST);
+	hint(DISABLE_DEPTH_TEST);
+	fill((float) moonlander.getValue("fadecolorR"), (float) moonlander.getValue("fadecolorG"), (float) moonlander.getValue("fadecolorB"), (float) moonlander.getValue("fade"));
+	rect(0, 0, width * 2, height * 2);
+	hint(ENABLE_DEPTH_TEST);
 }

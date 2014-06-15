@@ -11,19 +11,9 @@
 			<key row="127" value="800" interpolation="0"/>
 			<key row="128" value="0" interpolation="0"/>
 			<key row="257" value="600" interpolation="0"/>
-		</track>
-		<track name="camera_z">
-			<key row="0" value="-1825.4" interpolation="1"/>
-			<key row="32" value="1000" interpolation="0"/>
-			<key row="33" value="-2500" interpolation="1"/>
-			<key row="64" value="0" interpolation="0"/>
-			<key row="65" value="-1200.3" interpolation="1"/>
-			<key row="96" value="1300" interpolation="0"/>
-			<key row="97" value="-350" interpolation="1"/>
-			<key row="127" value="1300" interpolation="0"/>
-			<key row="128" value="0" interpolation="1"/>
-			<key row="160" value="1000" interpolation="0"/>
-			<key row="257" value="-800" interpolation="0"/>
+			<key row="320" value="1400" interpolation="0"/>
+			<key row="353" value="-199" interpolation="0"/>
+			<key row="401" value="-199" interpolation="0"/>
 		</track>
 		<track name="camera_y">
 			<key row="0" value="-200" interpolation="1"/>
@@ -38,6 +28,33 @@
 			<key row="160" value="800" interpolation="1"/>
 			<key row="168" value="1000" interpolation="0"/>
 			<key row="257" value="-100" interpolation="0"/>
+			<key row="320" value="-799" interpolation="1"/>
+			<key row="336" value="-439" interpolation="1"/>
+			<key row="344" value="170" interpolation="0"/>
+			<key row="353" value="-58.7" interpolation="1"/>
+			<key row="400" value="8" interpolation="0"/>
+			<key row="401" value="-58.7" interpolation="1"/>
+			<key row="448" value="8" interpolation="0"/>
+		</track>
+		<track name="camera_z">
+			<key row="0" value="-1825.4" interpolation="1"/>
+			<key row="32" value="1000" interpolation="0"/>
+			<key row="33" value="-2500" interpolation="1"/>
+			<key row="64" value="0" interpolation="0"/>
+			<key row="65" value="-1200.3" interpolation="1"/>
+			<key row="96" value="1300" interpolation="0"/>
+			<key row="97" value="-350" interpolation="1"/>
+			<key row="127" value="1300" interpolation="0"/>
+			<key row="128" value="0" interpolation="1"/>
+			<key row="160" value="1000" interpolation="0"/>
+			<key row="257" value="-800" interpolation="0"/>
+			<key row="320" value="-1599" interpolation="3"/>
+			<key row="336" value="-960" interpolation="2"/>
+			<key row="344" value="-0.0999756" interpolation="0"/>
+			<key row="353" value="-890" interpolation="1"/>
+			<key row="400" value="1900" interpolation="0"/>
+			<key row="401" value="-890" interpolation="1"/>
+			<key row="448" value="1900" interpolation="0"/>
 		</track>
 		<track name="rotate_x">
 			<key row="0" value="-20" interpolation="0"/>
@@ -47,6 +64,13 @@
 			<key row="127" value="-60" interpolation="0"/>
 			<key row="128" value="-30" interpolation="0"/>
 			<key row="257" value="-50" interpolation="0"/>
+			<key row="320" value="-40" interpolation="3"/>
+			<key row="336" value="-20" interpolation="1"/>
+			<key row="340" value="-10" interpolation="1"/>
+			<key row="344" value="10" interpolation="1"/>
+			<key row="352" value="50" interpolation="0"/>
+			<key row="353" value="2" interpolation="0"/>
+			<key row="401" value="2" interpolation="0"/>
 		</track>
 		<track name="rotate_y">
 			<key row="0" value="40" interpolation="1"/>
@@ -57,6 +81,8 @@
 			<key row="127" value="30" interpolation="0"/>
 			<key row="128" value="0" interpolation="0"/>
 			<key row="257" value="30" interpolation="0"/>
+			<key row="353" value="-16.2" interpolation="0"/>
+			<key row="401" value="-16.2" interpolation="0"/>
 		</track>
 		<track name="rotate_z">
 			<key row="0" value="0" interpolation="0"/>
@@ -65,6 +91,8 @@
 			<key row="96" value="10" interpolation="0"/>
 			<key row="97" value="10" interpolation="0"/>
 			<key row="128" value="0" interpolation="0"/>
+			<key row="353" value="5" interpolation="0"/>
+			<key row="401" value="5" interpolation="0"/>
 		</track>
 		<track name="wave1">
 			<key row="0" value="0.05" interpolation="0"/>
@@ -74,11 +102,15 @@
 			<key row="128" value="0.2" interpolation="1"/>
 			<key row="176" value="0.1" interpolation="0"/>
 			<key row="257" value="0" interpolation="0"/>
+			<key row="353" value="0.1" interpolation="0"/>
+			<key row="401" value="0.1" interpolation="0"/>
 		</track>
 		<track name="wave1_spd">
 			<key row="0" value="2" interpolation="0"/>
 			<key row="128" value="0.3" interpolation="1"/>
 			<key row="168" value="0.1" interpolation="0"/>
+			<key row="353" value="0.5" interpolation="0"/>
+			<key row="401" value="0.5" interpolation="0"/>
 		</track>
 		<track name="wave2">
 			<key row="0" value="0.05" interpolation="0"/>
@@ -87,19 +119,32 @@
 			<key row="160" value="0.2" interpolation="1"/>
 			<key row="168" value="0.1" interpolation="0"/>
 			<key row="257" value="0" interpolation="0"/>
+			<key row="353" value="0.1" interpolation="0"/>
+			<key row="401" value="0.1" interpolation="0"/>
 		</track>
 		<track name="wave2_spd">
 			<key row="0" value="2" interpolation="0"/>
 			<key row="128" value="1" interpolation="1"/>
 			<key row="168" value="5" interpolation="1"/>
 			<key row="176" value="0" interpolation="0"/>
+			<key row="353" value="0.5" interpolation="0"/>
+			<key row="401" value="0.5" interpolation="0"/>
 		</track>
 		<track name="wave3">
 			<key row="0" value="0.2" interpolation="1"/>
 			<key row="1" value="0.05" interpolation="0"/>
+			<key row="320" value="0.7" interpolation="1"/>
+			<key row="334" value="3" interpolation="0"/>
+			<key row="335" value="0.6" interpolation="0"/>
+			<key row="353" value="0.2" interpolation="0"/>
+			<key row="401" value="0.2" interpolation="0"/>
 		</track>
 		<track name="wave3_spd">
 			<key row="0" value="5" interpolation="0"/>
+			<key row="320" value="1" interpolation="1"/>
+			<key row="335" value="1" interpolation="0"/>
+			<key row="353" value="20" interpolation="0"/>
+			<key row="401" value="20" interpolation="0"/>
 		</track>
 		<track name="wave4">
 			<key row="0" value="0.01" interpolation="0"/>
@@ -109,18 +154,21 @@
 			<key row="240" value="100" interpolation="0"/>
 			<key row="253" value="100" interpolation="1"/>
 			<key row="256" value="0" interpolation="0"/>
+			<key row="344" value="255" interpolation="0"/>
 		</track>
 		<track name="fadecolorG">
 			<key row="0" value="0" interpolation="0"/>
 			<key row="240" value="100" interpolation="0"/>
 			<key row="253" value="100" interpolation="1"/>
 			<key row="256" value="0" interpolation="0"/>
+			<key row="344" value="255" interpolation="0"/>
 		</track>
 		<track name="fadecolorB">
 			<key row="0" value="0" interpolation="0"/>
 			<key row="240" value="100" interpolation="0"/>
 			<key row="253" value="100" interpolation="1"/>
 			<key row="256" value="0" interpolation="0"/>
+			<key row="344" value="255" interpolation="0"/>
 		</track>
 		<track name="fade">
 			<key row="0" value="1" interpolation="1"/>
@@ -147,17 +195,34 @@
 			<key row="200" value="0" interpolation="0"/>
 			<key row="240" value="0" interpolation="1"/>
 			<key row="253" value="100" interpolation="0"/>
-			<key row="256" value="100" interpolation="1"/>
+			<key row="256" value="255" interpolation="1"/>
 			<key row="264" value="0" interpolation="0"/>
+			<key row="317" value="0" interpolation="1"/>
+			<key row="320" value="255" interpolation="0"/>
+			<key row="321" value="255" interpolation="1"/>
+			<key row="324" value="0" interpolation="0"/>
+			<key row="344" value="0" interpolation="1"/>
+			<key row="352" value="255" interpolation="1"/>
+			<key row="360" value="0" interpolation="0"/>
+			<key row="392" value="0" interpolation="1"/>
+			<key row="400" value="255" interpolation="1"/>
+			<key row="408" value="0" interpolation="0"/>
+			<key row="440" value="0" interpolation="1"/>
+			<key row="448" value="255" interpolation="0"/>
 		</track>
 		<track name="scene">
 			<key row="0" value="1" interpolation="0"/>
 			<key row="128" value="3" interpolation="0"/>
 			<key row="192" value="4" interpolation="0"/>
-			<key row="256" value="2" interpolation="0"/>
+			<key row="256" value="5" interpolation="0"/>
+			<key row="321" value="2" interpolation="0"/>
 		</track>
-		<track name="SphereX"/>
-		<track name="SphereY"/>
+		<track name="SphereX">
+			<key row="328" value="0" interpolation="0"/>
+		</track>
+		<track name="SphereY">
+			<key row="328" value="1" interpolation="0"/>
+		</track>
 		<track name="SphereZ"/>
 		<track name="water_R">
 			<key row="0" value="1" interpolation="1"/>
@@ -165,6 +230,9 @@
 			<key row="32" value="2" interpolation="0"/>
 			<key row="64" value="0.4" interpolation="0"/>
 			<key row="96" value="1" interpolation="0"/>
+			<key row="320" value="0.2" interpolation="0"/>
+			<key row="352" value="0" interpolation="0"/>
+			<key row="400" value="0" interpolation="0"/>
 		</track>
 		<track name="water_G">
 			<key row="0" value="1" interpolation="1"/>
@@ -174,6 +242,9 @@
 			<key row="88" value="2" interpolation="0"/>
 			<key row="96" value="0" interpolation="1"/>
 			<key row="127" value="2" interpolation="0"/>
+			<key row="320" value="0.7" interpolation="0"/>
+			<key row="352" value="0.7" interpolation="0"/>
+			<key row="400" value="0.4" interpolation="0"/>
 		</track>
 		<track name="water_B">
 			<key row="0" value="1" interpolation="1"/>
@@ -183,6 +254,9 @@
 			<key row="88" value="2" interpolation="0"/>
 			<key row="96" value="2" interpolation="1"/>
 			<key row="127" value="0" interpolation="0"/>
+			<key row="320" value="1" interpolation="0"/>
+			<key row="352" value="0.4" interpolation="0"/>
+			<key row="400" value="0.7" interpolation="0"/>
 		</track>
 		<track name="water_alpha">
 			<key row="0" value="0" interpolation="1"/>
@@ -270,16 +344,70 @@
 			<key row="0" value="0" interpolation="0"/>
 			<key row="32" value="0" interpolation="0"/>
 			<key row="256" value="255" interpolation="0"/>
+			<key row="320" value="20" interpolation="0"/>
+			<key row="352" value="0" interpolation="0"/>
 		</track>
 		<track name="bg_G">
 			<key row="0" value="0" interpolation="0"/>
 			<key row="32" value="0" interpolation="0"/>
 			<key row="256" value="255" interpolation="0"/>
+			<key row="320" value="70" interpolation="0"/>
+			<key row="352" value="70" interpolation="0"/>
+			<key row="401" value="50" interpolation="0"/>
 		</track>
 		<track name="bg_B">
 			<key row="0" value="0" interpolation="0"/>
 			<key row="32" value="0" interpolation="0"/>
 			<key row="256" value="255" interpolation="0"/>
+			<key row="320" value="100" interpolation="0"/>
+			<key row="352" value="40" interpolation="0"/>
+			<key row="401" value="80" interpolation="0"/>
+		</track>
+		<track name="lineScale">
+			<key row="256" value="20" interpolation="1"/>
+			<key row="264" value="10" interpolation="1"/>
+			<key row="272" value="20" interpolation="1"/>
+			<key row="280" value="40" interpolation="1"/>
+			<key row="288" value="20" interpolation="1"/>
+			<key row="296" value="10" interpolation="1"/>
+			<key row="304" value="20" interpolation="1"/>
+			<key row="320" value="40" interpolation="0"/>
+		</track>
+		<track name="lineRotMult">
+			<key row="256" value="2" interpolation="1"/>
+			<key row="272" value="4" interpolation="1"/>
+			<key row="288" value="1" interpolation="1"/>
+			<key row="304" value="-5" interpolation="1"/>
+			<key row="320" value="-10" interpolation="0"/>
+		</track>
+		<track name="sphereScale">
+			<key row="256" value="10" interpolation="1"/>
+			<key row="264" value="5" interpolation="1"/>
+			<key row="272" value="10" interpolation="1"/>
+			<key row="280" value="5" interpolation="1"/>
+			<key row="288" value="10" interpolation="1"/>
+			<key row="296" value="5" interpolation="1"/>
+			<key row="304" value="30" interpolation="1"/>
+			<key row="315" value="10" interpolation="1"/>
+			<key row="320" value="40" interpolation="0"/>
+		</track>
+		<track name="sphere_R">
+			<key row="328" value="0.8" interpolation="0"/>
+			<key row="400" value="0" interpolation="1"/>
+			<key row="448" value="1" interpolation="0"/>
+		</track>
+		<track name="sphere_G">
+			<key row="328" value="0.1" interpolation="0"/>
+			<key row="400" value="0.4" interpolation="1"/>
+			<key row="448" value="1" interpolation="0"/>
+		</track>
+		<track name="sphere_B">
+			<key row="328" value="0.2" interpolation="0"/>
+			<key row="400" value="0.7" interpolation="1"/>
+			<key row="448" value="0.1" interpolation="0"/>
+		</track>
+		<track name="sphere_alpha">
+			<key row="328" value="0.95" interpolation="0"/>
 		</track>
 	</tracks>
 	<bookmarks>

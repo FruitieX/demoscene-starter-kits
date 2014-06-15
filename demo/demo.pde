@@ -252,14 +252,12 @@ void draw() {
 			float bx = (float) moonlander.getValue("SphereX");
 			float by = (float) moonlander.getValue("SphereY");
 			float bz = (float) moonlander.getValue("SphereZ");
-			for (int i = 0; i < 1; i++) {
-				pushMatrix();
-				scale(max(0.75, min(1, beat1 / 10)));
-				rotateY(-PI/2); // make the axises correct in a scientific way
-				translate(bx, by, bz);
-				shape(b);
-				popMatrix();
-			}
+			oceanShader.set("baseColor", (float) moonlander.getValue("sphere_R"), (float) moonlander.getValue("sphere_G"), (float) moonlander.getValue("sphere_B"), (float) moonlander.getValue("sphere_alpha"));
+			pushMatrix();
+			translate(bx, by, bz);
+			shape(s);
+			popMatrix();
+
 		}
 
 		resetShader();

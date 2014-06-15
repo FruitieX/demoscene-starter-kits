@@ -397,9 +397,10 @@ void draw() {
 	}
 
 	if (scene == 6) {
-		colorMode(HSV, 255);
+		colorMode(HSB, 255);
 		background(255);
-		fill(moonlander.getCurrentTime() % 255, 255, 255);
+		colorMode(RGB, 255);
+		fill((float)moonlander.getCurrentTime() % 255, 255, 255);
 
 		String[] holder = new String[8];
 		holder[0] = "#Graffathon demokomp00000 ";
@@ -421,6 +422,7 @@ void draw() {
 			tempStr = scramble(holder[getStrPos(holder, pos)],getIndPos(holder,pos));
 			lastSec = (int) currentTime;
 //			if (cnum == 0) tnum++;
+		text(tempStr,0, 150);
 	}
 //		}
 	if (scene == 10) {

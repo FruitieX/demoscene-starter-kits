@@ -183,11 +183,11 @@
 			<key row="65" value="1" interpolation="1"/>
 			<key row="72" value="0" interpolation="0"/>
 			<key row="88" value="0" interpolation="1"/>
-			<key row="96" value="255" interpolation="0"/>
-			<key row="97" value="255" interpolation="1"/>
+			<key row="96" value="1" interpolation="0"/>
+			<key row="97" value="1" interpolation="1"/>
 			<key row="104" value="0" interpolation="0"/>
 			<key row="120" value="0" interpolation="1"/>
-			<key row="127" value="255" interpolation="0"/>
+			<key row="127" value="1" interpolation="0"/>
 			<key row="128" value="255" interpolation="1"/>
 			<key row="136" value="0" interpolation="0"/>
 			<key row="184" value="0" interpolation="1"/>
@@ -209,7 +209,9 @@
 			<key row="400" value="255" interpolation="1"/>
 			<key row="408" value="0" interpolation="0"/>
 			<key row="440" value="0" interpolation="1"/>
-			<key row="448" value="255" interpolation="0"/>
+			<key row="448" value="255" interpolation="1"/>
+			<key row="449" value="100" interpolation="1"/>
+			<key row="455" value="0" interpolation="0"/>
 		</track>
 		<track name="scene">
 			<key row="0" value="1" interpolation="0"/>
@@ -217,6 +219,8 @@
 			<key row="192" value="4" interpolation="0"/>
 			<key row="256" value="5" interpolation="0"/>
 			<key row="321" value="2" interpolation="0"/>
+			<key row="449" value="6" interpolation="0"/>
+			<key row="584" value="10" interpolation="0"/>
 		</track>
 		<track name="SphereX">
 			<key row="328" value="0" interpolation="0"/>
@@ -410,6 +414,34 @@
 		</track>
 		<track name="sphere_alpha">
 			<key row="328" value="0.95" interpolation="0"/>
+		</track>
+		<track name="CredPos">
+			<key row="449" value="0" interpolation="0"/>
+			<key row="450" value="1" interpolation="0"/>
+			<key row="451" value="2" interpolation="0"/>
+			<key row="452" value="3" interpolation="0"/>
+			<key row="453" value="4" interpolation="0"/>
+			<key row="454" value="5" interpolation="0"/>
+			<key row="455" value="6" interpolation="0"/>
+			<key row="456" value="7" interpolation="0"/>
+			<key row="457" value="8" interpolation="0"/>
+			<key row="458" value="9" interpolation="0"/>
+			<key row="459" value="10" interpolation="1"/>
+			<key row="472" value="25" interpolation="0"/>
+			<key row="478" value="26" interpolation="1"/>
+			<key row="495" value="44" interpolation="0"/>
+			<key row="498" value="45" interpolation="1"/>
+			<key row="509" value="59" interpolation="0"/>
+			<key row="515" value="60" interpolation="1"/>
+			<key row="523" value="67" interpolation="0"/>
+			<key row="527" value="68" interpolation="1"/>
+			<key row="539" value="83" interpolation="0"/>
+			<key row="542" value="84" interpolation="1"/>
+			<key row="551" value="92" interpolation="0"/>
+			<key row="555" value="93" interpolation="1"/>
+			<key row="560" value="98" interpolation="0"/>
+			<key row="563" value="99" interpolation="1"/>
+			<key row="577" value="123" interpolation="0"/>
 		</track>
 	</tracks>
 	<bookmarks>

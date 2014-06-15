@@ -195,7 +195,7 @@
 			<key row="193" value="255" interpolation="1"/>
 			<key row="200" value="0" interpolation="0"/>
 			<key row="240" value="0" interpolation="1"/>
-			<key row="253" value="100" interpolation="0"/>
+			<key row="253" value="255" interpolation="0"/>
 			<key row="256" value="255" interpolation="1"/>
 			<key row="264" value="0" interpolation="0"/>
 			<key row="317" value="0" interpolation="1"/>

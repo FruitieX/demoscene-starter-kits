@@ -15,8 +15,8 @@ import java.util.*;
 
 Moonlander moonlander;
 
-int CANVAS_WIDTH = 1920;
-int CANVAS_HEIGHT = 1080;
+int CANVAS_WIDTH = 1920/2;
+int CANVAS_HEIGHT = 1080/2;
 PShape s,b; // s is the ocean,  b is bubble
 PShader oceanShader;
 
@@ -80,11 +80,8 @@ void rec(int level, Hexagon h) {
 	}
 }
 
-int bufsize = 1024; // soittopuskurin koko
-int windowsize = 2048; // fft-puskurin koko, muutettavissa napeilla a ja s
-int drawscale = 8; // y-skaalaus piirtäessä visualisaatiota
-int rate; // samplerate
-float effufade;
+int windowsize = 1024; // fft-puskurin koko, muutettavissa napeilla a ja s
+int rate = 44100; // samplerate
 
 Hexagon hex;
 FFT fft;
@@ -95,7 +92,7 @@ Minim minim;
 
 int player_samplepos() {
 	float secs = (float) moonlander.getCurrentTime();
-	int samplepos = (int)(secs * 44100);
+	int samplepos = (int)(secs * rate);
 	samplepos -= windowsize/2;
 	samplepos = max(samplepos, 0);
 	samplepos = min(samplepos, sampledata.length - windowsize);
@@ -110,9 +107,9 @@ void analyze() {
 
 void setup() {
 	// fft
+	frameRate(60);
 	minim = new Minim(this);
 	buffers = new MultiChannelBuffer(2, 2);
-	rate = 44100;
 	minim.loadFileIntoBuffer("graffa.wav", buffers);
 	sampledata = buffers.getChannel(0);
 	fft = new FFT(windowsize, rate);
@@ -183,7 +180,8 @@ void draw() {
 	int scene = (int) moonlander.getValue("scene");
 
 	if(scene == 1 || scene == 2) {
-		float beat = fft.getBand(10);
+		float beat1 = fft.getBand((int) moonlander.getValue("beat1_band"));
+		float beat2 = fft.getBand((int) moonlander.getValue("beat2_band"));
 		oceanShader.set("baseColor", (float) moonlander.getValue("water_R"), (float) moonlander.getValue("water_G"), (float) moonlander.getValue("water_B"), (float) moonlander.getValue("water_alpha"));
 		background(0, 0, 0);
 
@@ -215,8 +213,8 @@ void draw() {
 				PVector v = child.getVertex(i);
 				v.y = (float) moonlander.getValue("wave1") * (sin(v.x * (float) moonlander.getValue("wave1_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave1_spd") + (float) moonlander.getCurrentTime()));
 				v.y += (float) moonlander.getValue("wave2") * (sin(v.x * (float) moonlander.getValue("wave2_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave2_spd") + (float) moonlander.getCurrentTime()));
-				v.y += (float) moonlander.getValue("wave3") * (sin(v.x * (float) moonlander.getValue("wave3_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave3_spd") + (float) moonlander.getCurrentTime()));
-				v.y += min(beat / 10, 1) * (float) moonlander.getValue("wave4") * ((v.x * v.x + v.z * v.z * v.z) % 20);
+				v.y += max(0.5, min(beat2 / 10, 1)) * (float) moonlander.getValue("wave3") * (sin(v.x * (float) moonlander.getValue("wave3_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave3_spd") + (float) moonlander.getCurrentTime()));
+				v.y += max(0.5, min(beat1 / 10, 1)) * (float) moonlander.getValue("wave4") * ((v.x * v.x + v.z * v.z * v.z) % 20);
 				child.setVertex(i, v);
 			}
 		}
@@ -248,15 +246,15 @@ void draw() {
 		int numRect = (int) moonlander.getValue("Rectangel #");
 		if (numRect > 1) {
 			for (int i = 0; i < numRect; i++) {
-				fill(255-random(0,100),50*sin(currentTime), 100-currentTime%30,200-currentTime%30);
+				fill(255-random(0,100),50.0*sin(currentTime), 100.0-currentTime%30,200.0-currentTime%30);
 				rect(0,CANVAS_HEIGHT/numRect*i,CANVAS_WIDTH*1.5,CANVAS_HEIGHT/(numRect-1));
 			}
 		}
 
 		pushMatrix();
 		translate(CANVAS_WIDTH/2,CANVAS_HEIGHT/2);
-		fill(.8,200,100-(100*sin((float)moonlander.getCurrentTime())),50);
-		stroke(250,0,0);
+		fill(.8,200,100-(100.0*sin((float)moonlander.getCurrentTime())),50);
+		stroke(0,0,0);
 		strokeWeight(2);
 //		hex.display();
 		int rotate = (int) moonlander.getValue("Rotate");
@@ -264,8 +262,8 @@ void draw() {
 			for (int i = 0; i < hex.getVertexCount(); i++ ) {
 	//			fill(0, 200*i, 255-i*20);
 				PVector v = hex.getVertex(i);
-				v.x += cos(PI*(float)millis()/1000);
-				v.y += sin(PI*(float)millis()/1000);
+				v.x += cos(PI*(float)millis()/1000.0);
+				v.y += sin(PI*(float)millis()/1000.0);
 				hex.setVertex(i, v);
 			}
 		}

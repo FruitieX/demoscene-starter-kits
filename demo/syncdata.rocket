@@ -1,4 +1,4 @@
-<sync rows="128">
+<sync rows="1024">
 	<tracks>
 		<track name="background_red"/>
 		<track name="camera_x">
@@ -9,6 +9,7 @@
 			<key row="95" value="400" interpolation="0"/>
 			<key row="97" value="2790" interpolation="1"/>
 			<key row="127" value="800" interpolation="0"/>
+			<key row="128" value="0" interpolation="0"/>
 		</track>
 		<track name="camera_z">
 			<key row="0" value="-1825.4" interpolation="1"/>
@@ -19,6 +20,7 @@
 			<key row="96" value="1300" interpolation="0"/>
 			<key row="97" value="-350" interpolation="1"/>
 			<key row="127" value="1300" interpolation="0"/>
+			<key row="128" value="0" interpolation="0"/>
 		</track>
 		<track name="camera_y">
 			<key row="0" value="-200" interpolation="1"/>
@@ -29,6 +31,7 @@
 			<key row="96" value="1800" interpolation="0"/>
 			<key row="97" value="120" interpolation="1"/>
 			<key row="127" value="2000" interpolation="0"/>
+			<key row="128" value="0" interpolation="0"/>
 		</track>
 		<track name="rotate_x">
 			<key row="0" value="-20" interpolation="0"/>
@@ -36,6 +39,7 @@
 			<key row="65" value="-40" interpolation="0"/>
 			<key row="97" value="-40" interpolation="1"/>
 			<key row="127" value="-60" interpolation="0"/>
+			<key row="128" value="0" interpolation="0"/>
 		</track>
 		<track name="rotate_y">
 			<key row="0" value="40" interpolation="1"/>
@@ -43,6 +47,8 @@
 			<key row="33" value="-27" interpolation="0"/>
 			<key row="65" value="10" interpolation="0"/>
 			<key row="97" value="40" interpolation="0"/>
+			<key row="127" value="30" interpolation="0"/>
+			<key row="128" value="0" interpolation="0"/>
 		</track>
 		<track name="rotate_z">
 			<key row="0" value="0" interpolation="0"/>
@@ -50,6 +56,7 @@
 			<key row="65" value="-10" interpolation="1"/>
 			<key row="96" value="10" interpolation="0"/>
 			<key row="97" value="10" interpolation="0"/>
+			<key row="128" value="0" interpolation="0"/>
 		</track>
 		<track name="wave1">
 			<key row="0" value="0.05" interpolation="0"/>
@@ -104,9 +111,11 @@
 			<key row="104" value="0" interpolation="0"/>
 			<key row="120" value="0" interpolation="1"/>
 			<key row="127" value="1" interpolation="0"/>
+			<key row="128" value="0" interpolation="0"/>
 		</track>
 		<track name="scene">
 			<key row="0" value="1" interpolation="0"/>
+			<key row="128" value="3" interpolation="0"/>
 		</track>
 		<track name="SphereX"/>
 		<track name="SphereY"/>
@@ -150,7 +159,19 @@
 			<key row="91" value="0.4" interpolation="1"/>
 			<key row="96" value="0.5" interpolation="0"/>
 		</track>
-		<track name="Recursion level"/>
+		<track name="Recursion level">
+			<key row="128" value="2" interpolation="0"/>
+		</track>
+		<track name="beat1_band">
+			<key row="0" value="0" interpolation="0"/>
+		</track>
+		<track name="beat2_band">
+			<key row="0" value="40" interpolation="0"/>
+		</track>
+		<track name="Rectangel #">
+			<key row="128" value="3" interpolation="0"/>
+		</track>
+		<track name="Rotate"/>
 	</tracks>
 	<bookmarks>
 		<bookmark row="16"/>

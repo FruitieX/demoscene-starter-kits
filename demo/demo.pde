@@ -15,8 +15,8 @@ import java.util.*;
 
 Moonlander moonlander;
 
-int CANVAS_WIDTH = 1920/2;
-int CANVAS_HEIGHT = 1080/2;
+int CANVAS_WIDTH = 1920;
+int CANVAS_HEIGHT = 1080;
 PShape s,b; // s is the ocean,	b is bubble
 PShader oceanShader;
 
@@ -417,7 +417,7 @@ void draw() {
 //		for (int i =0; i <4 ; i++) hlen += holder[i].length();
 		int pos = (int) moonlander.getValue("CredPos");
 
-		println("Pos is "+pos+" Right now in word number "+ getStrPos(holder, pos)+"and pos "+getIndPos(holder,pos));
+//		println("Pos is "+pos+" Right now in word number "+ getStrPos(holder, pos)+"and pos "+getIndPos(holder,pos));
 //		for (int i = 0; i < holder.length(); i++) {
 			tempStr = scramble(holder[getStrPos(holder, pos)],getIndPos(holder,pos));
 			lastSec = (int) currentTime;

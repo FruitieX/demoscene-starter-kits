@@ -398,9 +398,9 @@ void draw() {
 
 	if (scene == 6) {
 		colorMode(HSB, 255);
-		background(255);
+		background(0);
 		colorMode(RGB, 255);
-		fill((float)moonlander.getCurrentTime() % 255, 255, 255);
+		fill(0,200,0);
 
 		String[] holder = new String[8];
 		holder[0] = "#Graffathon demokomp00000 ";

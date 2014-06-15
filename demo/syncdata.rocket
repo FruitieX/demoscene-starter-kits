@@ -54,7 +54,8 @@
 			<key row="0" value="2" interpolation="0"/>
 		</track>
 		<track name="wave3">
-			<key row="0" value="0.05" interpolation="0"/>
+			<key row="0" value="0.2" interpolation="1"/>
+			<key row="1" value="0.05" interpolation="0"/>
 		</track>
 		<track name="wave3_spd">
 			<key row="0" value="5" interpolation="0"/>
@@ -125,9 +126,12 @@
 			<key row="91" value="0.4" interpolation="1"/>
 			<key row="96" value="0" interpolation="0"/>
 		</track>
+		<track name="Recursion level"/>
 	</tracks>
 	<bookmarks>
+		<bookmark row="16"/>
 		<bookmark row="34"/>
+		<bookmark row="36"/>
 		<bookmark row="70"/>
 	</bookmarks>
 </sync>

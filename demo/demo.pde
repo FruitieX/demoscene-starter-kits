@@ -10,6 +10,8 @@
 import moonlander.library.*;
 
 import ddf.minim.*;
+import ddf.minim.analysis.*;
+import java.util.*;
 
 Moonlander moonlander;
 
@@ -78,11 +80,46 @@ void rec(int level, Hexagon h) {
 	}
 }
 
+int bufsize = 1024; // soittopuskurin koko
+int windowsize = 2048; // fft-puskurin koko, muutettavissa napeilla a ja s
+int drawscale = 8; // y-skaalaus piirtäessä visualisaatiota
+int rate; // samplerate
+float effufade;
+
 Hexagon hex;
+FFT fft;
+float[] sampledata;
+MultiChannelBuffer buffers;
+AudioPlayer audioplayer;
+Minim minim;
+
+int player_samplepos() {
+	float secs = (float) moonlander.getCurrentTime();
+	int samplepos = (int)(secs * 44100);
+	samplepos -= windowsize/2;
+	samplepos = max(samplepos, 0);
+	samplepos = min(samplepos, sampledata.length - windowsize);
+	return samplepos;
+}
+
+void analyze() {
+	int samplepos = player_samplepos();
+	float[] window = Arrays.copyOfRange(sampledata, samplepos, samplepos + windowsize);
+	fft.forward(window);
+}
 
 void setup() {
+	// fft
+	minim = new Minim(this);
+	buffers = new MultiChannelBuffer(2, 2);
+	rate = 44100;
+	minim.loadFileIntoBuffer("graffa.wav", buffers);
+	sampledata = buffers.getChannel(0);
+	fft = new FFT(windowsize, rate);
+	fft.window(FFT.HAMMING);
+
 	// The P3D parameter enables accelerated 3D rendering.
-        moonlander = Moonlander.initWithSoundtrack(this, "graffa.wav", 100, 4);
+	moonlander = Moonlander.initWithSoundtrack(this, "graffa.wav", 89, 4);
 	size(CANVAS_WIDTH, CANVAS_HEIGHT, P3D);
 	rectMode(CENTER);
 
@@ -141,11 +178,12 @@ void draw() {
 	// update moonlander with rocket
 	moonlander.update();
 	currentTime = (float) moonlander.getCurrentTime();
+	analyze();
 
 	int scene = (int) moonlander.getValue("scene");
 
 	if(scene == 1 || scene == 2) {
-
+		float beat = fft.getBand(10);
 		oceanShader.set("baseColor", (float) moonlander.getValue("water_R"), (float) moonlander.getValue("water_G"), (float) moonlander.getValue("water_B"), (float) moonlander.getValue("water_alpha"));
 		background(0, 0, 0);
 
@@ -178,7 +216,7 @@ void draw() {
 				v.y = (float) moonlander.getValue("wave1") * (sin(v.x * (float) moonlander.getValue("wave1_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave1_spd") + (float) moonlander.getCurrentTime()));
 				v.y += (float) moonlander.getValue("wave2") * (sin(v.x * (float) moonlander.getValue("wave2_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave2_spd") + (float) moonlander.getCurrentTime()));
 				v.y += (float) moonlander.getValue("wave3") * (sin(v.x * (float) moonlander.getValue("wave3_spd") + (float) moonlander.getCurrentTime()) + cos(v.z * (float) moonlander.getValue("wave3_spd") + (float) moonlander.getCurrentTime()));
-				v.y += (float) moonlander.getValue("wave4") * ((v.x * v.x + v.z * v.z * v.z) % 20);
+				v.y += min(beat / 10, 1) * (float) moonlander.getValue("wave4") * ((v.x * v.x + v.z * v.z * v.z) % 20);
 				child.setVertex(i, v);
 			}
 		}
@@ -223,13 +261,13 @@ void draw() {
 //		hex.display();
 		int rotate = (int) moonlander.getValue("Rotate");
 		if (rotate == 1 && lastTime != currentTime) {
-		for (int i = 0; i < hex.getVertexCount(); i++ ) {
-//			fill(0, 200*i, 255-i*20);
-			PVector v = hex.getVertex(i);
-			v.x += cos(PI*(float)millis()/1000);
-			v.y += sin(PI*(float)millis()/1000);
-			hex.setVertex(i, v);
-		}
+			for (int i = 0; i < hex.getVertexCount(); i++ ) {
+	//			fill(0, 200*i, 255-i*20);
+				PVector v = hex.getVertex(i);
+				v.x += cos(PI*(float)millis()/1000);
+				v.y += sin(PI*(float)millis()/1000);
+				hex.setVertex(i, v);
+			}
 		}
 		rec(level,hex);
 //		rect(0,0,100,100);

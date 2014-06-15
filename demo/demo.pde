@@ -23,6 +23,11 @@ PShader oceanShader;
 float currentTime; // = moonlander.getCurrentTime();
 float lastTime=0;
 
+//Lines variables
+float[][] points;
+float mindist = 100;
+int ptnum = 300;
+
 class Hexagon {
 	PShape h;
 
@@ -80,7 +85,7 @@ void rec(int level, Hexagon h) {
 	}
 }
 
-int windowsize = 1024; // fft-puskurin koko, muutettavissa napeilla a ja s
+int windowsize = 2048; // fft-puskurin koko, muutettavissa napeilla a ja s
 int rate = 44100; // samplerate
 
 Hexagon hex;
@@ -167,6 +172,14 @@ void setup() {
 
 	// create hexagon
 	hex = new Hexagon(100, 255);
+
+        //line prep
+        points = new float[ptnum][3];
+        for (int i=0; i < ptnum; i++){
+          points[i][0] = random(20, width);
+          points[i][1] = random(20, height);
+          points[i][2] = random(20, width);
+        }
 
 	moonlander.start();
 }
@@ -272,6 +285,43 @@ void draw() {
 		popMatrix();
 		lastTime = currentTime;
 	}
+        if (scene == 4){ //Lines.
+          hint(DISABLE_DEPTH_TEST);
+          fill(0,2);
+          rect(0, 0, width * 2, height * 2);
+          hint(ENABLE_DEPTH_TEST);  
+          pushMatrix();
+          translate(width/2, height/2, 0);
+          pushMatrix();
+          rotateZ(radians(currentTime*30*3));
+          scale(radians(currentTime*30*0.1));
+          for (int i = 0; i < ptnum; i++){
+            points[i][0] += sin(radians(currentTime*30)*noise(points[i][0]+50))*random(-2, 2);
+            points[i][1] += cos(radians(currentTime*30)*noise(points[i][1]+13))*random(-2, 2);
+            points[i][2] += cos(radians(currentTime*30)*noise(points[i][2]))*random(-2, 2);
+            point(points[i][0], points[i][1], points[i][2]); 
+          }
+          fill(255);
+          stroke(255, 15);
+          blendMode(BLEND);
+  
+          for (int i=0; i<ptnum; i++){
+            for (int j=0; j<ptnum; j++){
+              float d = dist(points[i][0], points[i][1], points[i][2], points[j][0], points[j][1], points[j][2]);     
+              if (d < mindist){
+                line(points[i][0], points[i][1], points[i][2], points[j][0], points[j][1], points[j][2]);
+              }
+            }
+          }
+          popMatrix();
+          rotateY(radians(currentTime*30*4));
+          directionalLight(255, 255, 255, 0, 1, 0);
+          noStroke();
+          fill(155);
+          scale(10);
+          sphere(10);
+          popMatrix();
+        }
 
 	hint(DISABLE_DEPTH_TEST);
 	fill((float) moonlander.getValue("fadecolorR"), (float) moonlander.getValue("fadecolorG"), (float) moonlander.getValue("fadecolorB"), (float) moonlander.getValue("fade"));

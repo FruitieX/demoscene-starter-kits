@@ -195,6 +195,9 @@
 		<track name="Rotate">
 			<key row="128" value="1" interpolation="0"/>
 		</track>
+		<track name="rectRed"/>
+		<track name="rectGreen"/>
+		<track name="rectBlue"/>
 	</tracks>
 	<bookmarks>
 		<bookmark row="16"/>

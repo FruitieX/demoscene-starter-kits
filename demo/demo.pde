@@ -28,6 +28,28 @@ float[][] points;
 float mindist = 100;
 int ptnum = 300;
 
+PFont font;
+int tnum = 0, cnum = 0; // tnum = which word in credit it is on, cnum = which char
+float lastSec = 0; // to only update text in credits every 1 second
+String tempStr = ""; // holds the scrambled word in credits
+
+int getStrPos(String[] strarr, int index) {
+	int sum=0;
+	for (int i = 0; i < 4; i++) {
+		if (index < sum+strarr[i].length()) return i;
+		sum += strarr[i].length();
+	}
+	return -1;
+}
+int getIndPos(String[] strarr, int index) {
+	int sum=0;
+	for (int i = 0; i < 4; i++) {
+		if (index < sum+strarr[i].length()) return index-sum;
+		sum += strarr[i].length();
+	}
+	return -1;
+}
+
 class Hexagon {
 	PShape h;
 
@@ -59,11 +81,6 @@ class Hexagon {
 	}
 
 	void display() { shape(h); }
-}
-void drawTrail(int a, int r, int g, int b) {
-	stroke(a,r,g,b);
-	fill(a,r,g,b);
-
 }
 
 void rec(int level, Hexagon h) {
@@ -185,7 +202,20 @@ void setup() {
 		  points[i][2] = random(20, width);
 		}
 
+	// load font
+	font = createFont("FreeMonoBold.otf", 42, true);
+	textFont(font);
+
 	moonlander.start();
+}
+
+String scramble(String word, int pos) {
+	char[] temp = word.toCharArray();
+	for (int i = pos; i < word.length(); i++) {
+		temp[i] = (char) (int) random(33,126);
+	}
+
+	return new String(temp);
 }
 
 void draw() {
@@ -357,6 +387,31 @@ void draw() {
 		scale(10);
 		sphere(10);
 		popMatrix();
+	}
+
+	if (scene == 6) {
+		colorMode(RGB, 255);
+		background(255);
+		fill(0,200,50);
+		String[] holder = new String[4];
+		holder[0] = "Ihan sama, joo";
+		holder[1] = "Pingviinituutti";
+		holder[2] = "FruitieX";
+		holder[3] = "Craas";
+		text(holder[0],0,100);
+		int hlen = 0;
+		for (int i =0; i <4 ; i++) hlen += holder[i].length();
+		int pos = (int) moonlander.getValue("CredPos");
+
+		println("Pos is "+pos+" Right now in word number "+ getStrPos(holder, pos)+"and pos "+getIndPos(holder,pos));
+//		for (int i = 0; i < holder.length(); i++) {
+		if (currentTime - lastSec > 0.2)	{
+			tempStr = scramble(holder[getStrPos(holder, pos)],holder[getStrPos(holder,pos)].length()-getIndPos(holder,pos));
+			lastSec = (int) currentTime;
+//			if (cnum == 0) tnum++;
+		}
+		text(tempStr,0,150);
+//		}
 	}
 
 	hint(DISABLE_DEPTH_TEST);

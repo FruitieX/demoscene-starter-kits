@@ -272,14 +272,9 @@ void draw() {
 			hint(ENABLE_DEPTH_TEST);
 		}
 
-		//background(0,0,0);
 		hint(DISABLE_DEPTH_TEST);
 
-		colorMode(RGB, 100);
-//		resetShader();
-		//background(255,255,255);
-
-//		noStroke();
+		colorMode(RGB, 255);
 		stroke(100,100,0);
 
 		float red = (float)moonlander.getValue("rectRed");
@@ -297,6 +292,7 @@ void draw() {
 			}
 		}
 
+		// render hexagons
 		pushMatrix();
 		translate(CANVAS_WIDTH/2,CANVAS_HEIGHT/2);
 		scale(max(1, beat1/3));

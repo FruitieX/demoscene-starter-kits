@@ -267,7 +267,7 @@ void draw() {
 		int level = (int) moonlander.getValue("Recursion level");
 		if(scene == 4) {
 			hint(DISABLE_DEPTH_TEST);
-			fill(0,0.2);
+			fill(0,20);
 			rect(0, 0, width * 2, height * 2);
 			hint(ENABLE_DEPTH_TEST);
 		}
@@ -275,11 +275,24 @@ void draw() {
 		//background(0,0,0);
 		hint(DISABLE_DEPTH_TEST);
 
+		colorMode(RGB, 100);
+//		resetShader();
+		//background(255,255,255);
+
+//		noStroke();
+		stroke(100,100,0);
+
+		float red = (float)moonlander.getValue("rectRed");
+		float green  = (float)moonlander.getValue("rectGreen");
+		float blue = (float)moonlander.getValue("rectBlue");
+
 		// make nice background
 		int numRect = (int) moonlander.getValue("Rectangel #");
 		if (numRect > 1) {
 			for (int i = 0; i < numRect; i++) {
-				fill(255-random(0,100),50.0*sin(currentTime), 100.0-currentTime%30,200.0-currentTime%30);
+				fill(red,green,blue);
+//				fill(255-random(0,100),50*sin(currentTime), 100-currentTime%30,200-currentTime%30);
+//				fill(100,100,100);
 				rect(0,CANVAS_HEIGHT/numRect*i,CANVAS_WIDTH*1.5,CANVAS_HEIGHT/(numRect-1));
 			}
 		}
@@ -287,8 +300,10 @@ void draw() {
 		pushMatrix();
 		translate(CANVAS_WIDTH/2,CANVAS_HEIGHT/2);
 		scale(max(1, beat1/3));
-		fill(.8,200,100-(100.0*sin((float)moonlander.getCurrentTime())),50);
-		stroke(0,0,0);
+		//fill(.8,200,100-(100.0*sin((float)moonlander.getCurrentTime())),50);
+		//stroke(0,0,0);
+		fill(200,100+(100*sin((float)moonlander.getCurrentTime())),50,100);
+		stroke(1,0,0);
 		strokeWeight(2);
 //		hex.display();
 		int rotate = (int) moonlander.getValue("Rotate");

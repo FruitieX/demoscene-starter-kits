@@ -418,6 +418,7 @@ void draw() {
 //			if (cnum == 0) tnum++;
 		}
 		text(tempStr,0,150);
+	}
 //		}
 	if (scene == 10) {
 		exit();

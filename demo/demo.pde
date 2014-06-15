@@ -209,7 +209,7 @@ void draw() {
 
 	if(scene == 1 || scene == 2 || scene == 3) {
 		oceanShader.set("baseColor", (float) moonlander.getValue("water_R"), (float) moonlander.getValue("water_G"), (float) moonlander.getValue("water_B"), (float) moonlander.getValue("water_alpha"));
-		background(0, 0, 0);
+		background((float) moonlander.getValue("bg_R"), (float) moonlander.getValue("bg_G"), (float) moonlander.getValue("bg_B"));
 
 		//directionalLight(255, 255, 255, -(pow(sin(radians((float) moonlander.getCurrentTime())), 2)+300 / float(width) - 0.5) * 2, -(300 / float(height) - 0.5) * 2, -1);
 		directionalLight(255, 255, 255, 0, 1, 0);
@@ -244,6 +244,7 @@ void draw() {
 				child.setVertex(i, v);
 			}
 		}
+
 		shape(s);
 
 		if (scene == 2) {
@@ -253,6 +254,7 @@ void draw() {
 			float bz = (float) moonlander.getValue("SphereZ");
 			for (int i = 0; i < 1; i++) {
 				pushMatrix();
+				scale(max(0.75, min(1, beat1 / 10)));
 				rotateY(-PI/2); // make the axises correct in a scientific way
 				translate(bx, by, bz);
 				shape(b);
@@ -302,10 +304,7 @@ void draw() {
 		scale(max(1, beat1/3));
 		//fill(.8,200,100-(100.0*sin((float)moonlander.getCurrentTime())),50);
 		//stroke(0,0,0);
-		if(scene == 3)
-			fill((float) moonlander.getValue("hexRed"), (float) moonlander.getValue("hexGreen"), (float) moonlander.getValue("hexBlue"), (float) moonlander.getValue("hexAlpha"));
-		else
-			fill(200,100+(100*sin((float)moonlander.getCurrentTime())),50,100);
+		fill((float) moonlander.getValue("hexRed"), (float) moonlander.getValue("hexGreen"), (float) moonlander.getValue("hexBlue"), (float) moonlander.getValue("hexAlpha"));
 		stroke(1,0,0);
 		strokeWeight(2);
 //		hex.display();

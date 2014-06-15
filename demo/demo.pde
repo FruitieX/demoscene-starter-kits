@@ -370,6 +370,10 @@ void draw() {
 		popMatrix();
 	}
 
+	if (scene == 10) {
+		exit();
+	}
+
 	hint(DISABLE_DEPTH_TEST);
 	fill((float) moonlander.getValue("fadecolorR"), (float) moonlander.getValue("fadecolorG"), (float) moonlander.getValue("fadecolorB"), (float) moonlander.getValue("fade"));
 	rect(0, 0, width * 2, height * 2);

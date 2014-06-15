@@ -374,7 +374,7 @@
 			<key row="264" value="20" interpolation="1"/>
 			<key row="272" value="40" interpolation="1"/>
 			<key row="280" value="80" interpolation="1"/>
-			<key row="288" value="40" interpolation="1"/>
+			<key row="288" value="25" interpolation="1"/>
 			<key row="296" value="20" interpolation="1"/>
 			<key row="304" value="40" interpolation="1"/>
 			<key row="320" value="80" interpolation="0"/>
@@ -382,7 +382,7 @@
 		<track name="lineRotMult">
 			<key row="256" value="2" interpolation="1"/>
 			<key row="272" value="4" interpolation="1"/>
-			<key row="288" value="1" interpolation="1"/>
+			<key row="288" value="1.2" interpolation="1"/>
 			<key row="304" value="-5" interpolation="1"/>
 			<key row="320" value="-10" interpolation="0"/>
 		</track>

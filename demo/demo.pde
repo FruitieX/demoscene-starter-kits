@@ -25,8 +25,8 @@ float lastTime=0;
 
 //Lines variables
 float[][] points;
-float mindist = 100;
-int ptnum = 300;
+float mindist = 250;
+int ptnum = 400;
 
 PFont font;
 //int tnum = 0, cnum = 0; // tnum = which word in credit it is on, cnum = which char

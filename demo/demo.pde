@@ -324,22 +324,29 @@ void draw() {
 		lastTime = currentTime;
 		hint(ENABLE_DEPTH_TEST);
 	} else if (scene == 5){ //Lines.
-	/*
+                float scaling = (float) moonlander.getValue("lineScale");
+                float rotMult = (float) moonlander.getValue("lineRotMult");
+                float sphScale = (float) moonlander.getValue("sphereScale");
+                
+	        if (beat1 < 2){
+                  background(0);
+                }
+                colorMode(RGB, 255);
 		hint(DISABLE_DEPTH_TEST);
 		fill(0,2);
 		rect(0, 0, width * 2, height * 2);
 		hint(ENABLE_DEPTH_TEST);
-		*/
+		
 		pushMatrix();
 		translate(width/2, height/2, 0);
 		pushMatrix();
-		rotateZ(radians(currentTime*30*3));
-		scale(radians(currentTime*30*0.1));
+		rotateZ(radians(rotMult*currentTime*30*3));
+		scale(radians(scaling));
 		for (int i = 0; i < ptnum; i++){
 			points[i][0] += sin(radians(currentTime*30)*noise(points[i][0]+50))*random(-2, 2);
 			points[i][1] += cos(radians(currentTime*30)*noise(points[i][1]+13))*random(-2, 2);
 			points[i][2] += cos(radians(currentTime*30)*noise(points[i][2]))*random(-2, 2);
-			point(points[i][0], points[i][1], points[i][2]);
+			//point(points[i][0], points[i][1], points[i][2]);
 		  }
 		fill(255);
 		stroke(255, 15);
@@ -358,7 +365,7 @@ void draw() {
 		directionalLight(255, 255, 255, 0, 1, 0);
 		noStroke();
 		fill(155);
-		scale(10);
+		scale(sphScale);
 		sphere(10);
 		popMatrix();
 	}

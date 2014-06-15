@@ -302,7 +302,10 @@ void draw() {
 		scale(max(1, beat1/3));
 		//fill(.8,200,100-(100.0*sin((float)moonlander.getCurrentTime())),50);
 		//stroke(0,0,0);
-		fill(200,100+(100*sin((float)moonlander.getCurrentTime())),50,100);
+		if(scene == 3)
+			fill((float) moonlander.getValue("hexRed"), (float) moonlander.getValue("hexGreen"), (float) moonlander.getValue("hexBlue"), (float) moonlander.getValue("hexAlpha"));
+		else
+			fill(200,100+(100*sin((float)moonlander.getCurrentTime())),50,100);
 		stroke(1,0,0);
 		strokeWeight(2);
 //		hex.display();
